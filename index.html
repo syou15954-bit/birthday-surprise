@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Flight To You ✈️🇸🇬</title>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Padauk:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; user-select: none; }
+    body {
+      background: #0f172a;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      font-family: 'Press Start 2P', monospace;
+      color: #fff;
+      overflow: hidden;
+    }
+    #hud {
+      position: absolute;
+      top: 15px;
+      width: 90%;
+      max-width: 500px;
+      display: flex;
+      justify-content: space-between;
+      font-size: 10px;
+      z-index: 10;
+      background: rgba(15, 23, 42, 0.85);
+      padding: 10px 14px;
+      border: 2px solid #38bdf8;
+      border-radius: 8px;
+    }
+    #gameCanvas {
+      background: linear-gradient(#1e293b, #0f172a);
+      border: 3px solid #38bdf8;
+      border-radius: 12px;
+      box-shadow: 0 0 25px rgba(56, 189, 248, 0.3);
+      max-width: 100%;
+      touch-action: none;
+    }
+    #tapGuide {
+      position: absolute;
+      bottom: 25px;
+      font-size: 9px;
+      color: #94a3b8;
+      text-align: center;
+      animation: blink 1.5s infinite;
+    }
+    @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+    
+    /* Birthday Surprise Modal */
+    #cardModal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.85);
+      z-index: 100;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .card-content {
+      background: #1e1b4b;
+      border: 3px solid #f43f5e;
+      border-radius: 16px;
+      padding: 24px;
+      max-width: 420px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 0 30px rgba(244, 63, 94, 0.5);
+      animation: popUp 0.5s ease-out;
+    }
+    @keyframes popUp { from { transform: scale(0.7); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+    .card-title { font-size: 14px; color: #fb7185; margin-bottom: 12px; }
+    .card-body {
+      font-family: 'Padauk', sans-serif;
+      font-size: 14px;
+      line-height: 1.8;
+      color: #e2e8f0;
+      margin: 15px 0;
+      text-align: left;
+      background: rgba(255, 255, 255, 0.05);
+      padding: 14px;
+      border-radius: 8px;
+    }
+    .btn-replay {
+      font-family: 'Press Start 2P', monospace;
+      font-size: 10px;
+      background: #f43f5e;
+      color: #fff;
+      border: none;
+      padding: 10px 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="hud">
+    <span>🇲🇲 YGN ✈️ 🇸🇬 SIN</span>
+    <span id="distText">1,920 KM</span>
+  </div>
+
+  <canvas id="gameCanvas" width="360" height="520"></canvas>
+  <div id="tapGuide">👆 SCREEN ကို TAP ပုတ်ပြီး လေယာဉ်ထိန်းပါ</div>
+
+  <!-- Final Popup Modal -->
+  <div id="cardModal">
+    <div class="card-content">
+      <div style="font-size: 32px; margin-bottom: 10px;">🎂✨</div>
+      <div class="card-title">HAPPY BIRTHDAY!</div>
+      <div class="card-body">
+        မွေးနေ့မှာ ပျော်ရွှင်ပါစေ ချစ်ရသူလေးရေ... ❤️<br><br>
+        ရန်ကုန်နဲ့ စင်ကာပူ မိုင်ပေါင်း ထောင်ချီဝေးနေပေမဲ့ ကိုယ်တို့ရဲ့ နှလုံးသားက အမြဲနီးနီးလေးပါ။ ပင်ပန်းတဲ့နေ့ရက်တွေတိုင်းမှာ အမြဲအနားမှာရှိနေပါမယ်။
+မင်းလိုချင်တဲ့ အိပ်မက်တွေအားလုံး ပြည့်ဝပါစေ။ ပျော်ရွှင်စရာမွေးနေ့လေး ဖြစ်ပါစေနော် ကိုချစ်လေးရေ!
+      </div>
+      <button class="btn-replay" onclick="resetGame()">PLAY AGAIN 🔁</button>
+    </div>
+  </div>
+
+  <script>
+    const canvas = document.getElementById('gameCanvas');
+    const ctx = canvas.getContext('2d');
+    const distText = document.getElementById('distText');
+    const cardModal = document.getElementById('cardModal');
+
+    // 8-Bit Audio Synth (Web Audio API)
+    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    function playTone(freq, type, duration) {
+      if (audioCtx.state === 'suspended') audioCtx.resume();
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.type = type;
+      osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+      gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+      osc.start();
+      osc.stop(audioCtx.currentTime + duration);
+    }
+
+    // Game Variables
+    let distance = 1920;
+    let planeY = 250;
+    let velocity = 0;
+    let gravity = 0.28;
+    let lift = -5;
+    let gameOver = false;
+    let gameWon = false;
+
+    // Memory Bubbles
+    const memoryNotes = ["ချစ်ဆုံးလေး ❤️", "ညစဉ်ဖုန်းပြောချိန် 🌙", "First Date 🌸", "များကြီးချစ်တယ် 💖","Happy Birthday🎂"];
+    let bubbles = [];
+    let clouds = [ { x: 50, y: 80, s: 0.8 }, { x: 220, y: 160, s: 1.2 }, { x: 120, y: 320, s: 0.6 } ];
+
+    function spawnBubble() {
+      if (distance > 100 && Math.random() < 0.03 && bubbles.length < 3) {
+        bubbles.push({
+          x: canvas.width + 20,
+          y: Math.random() * (canvas.height - 180) + 60,
+          text: memoryNotes[Math.floor(Math.random() * memoryNotes.length)]
+        });
+      }
+    }
+
+    function flap() {
+      if (gameOver || gameWon) return;
+      velocity = lift;
+      playTone(440, 'square', 0.1);
+    }
+
+    window.addEventListener('touchstart', (e) => { e.preventDefault(); flap(); }, { passive: false });
+    window.addEventListener('mousedown', flap);
+
+    function drawPixelPlane(x, y) {
+      ctx.fillStyle = "#ffffff";
+      ctx.fillRect(x, y + 4, 24, 6);
+      ctx.fillRect(x + 10, y, 6, 14);
+      ctx.fillStyle = "#38bdf8";
+      ctx.fillRect(x + 18, y + 5, 4, 3);
+      ctx.fillStyle = "#f43f5e";
+      ctx.fillRect(x + 2, y + 2, 4, 4);
+    }
+
+    function drawClouds() {
+      ctx.fillStyle = "rgba(255, 255, 255, 0.15)";
+      clouds.forEach(c => {
+        ctx.fillRect(c.x, c.y, 40 * c.s, 12 * c.s);
+        ctx.fillRect(c.x + 8 * c.s, c.y - 8 * c.s, 24 * c.s, 10 * c.s);
+        c.x -= 0.5 * c.s;
+        if (c.x < -60) c.x = canvas.width + 20;
+      });
+    }
+
+    function update() {
+      if (gameWon) return;
+
+      velocity += gravity;
+      planeY += velocity;
+      if (planeY > canvas.height - 30) planeY = canvas.height - 30;
+      if (planeY < 30) planeY = 30;
+
+      // Distance reduction (approaching Singapore)
+      if (distance > 0) {
+        distance -= 3;
+        if (distance < 0) distance = 0;
+        distText.innerText = distance + " KM";
+      } else {
+        winGame();
+      }
+
+      spawnBubble();
+      bubbles.forEach((b, index) => {
+        b.x -= 2;
+        // Collision detection
+        if (Math.abs(b.x - 60) < 25 && Math.abs(b.y - planeY) < 25) {
+          playTone(660, 'sine', 0.15);
+          bubbles.splice(index, 1);
+        }
+      });
+      bubbles = bubbles.filter(b => b.x > -80);
+    }
+
+    function render() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      drawClouds();
+
+      // Draw bubbles
+      bubbles.forEach(b => {
+        ctx.fillStyle = "#fb7185";
+        ctx.font = "10px Padauk";
+        ctx.fillText(b.text, b.x, b.y);
+      });
+
+      // Singapore Skyline when close
+      if (distance < 300) {
+        ctx.fillStyle = "#334155";
+        ctx.fillRect(180, 420, 30, 100);
+        ctx.fillRect(220, 380, 40, 140);
+        ctx.fillRect(270, 440, 35, 80);
+        ctx.fillStyle = "#f43f5e";
+        ctx.fillRect(200, 370, 5, 10); // Singapore Marker
+      }
+
+      drawPixelPlane(60, planeY);
+    }
+
+    function winGame() {
+      gameWon = true;
+      playTone(523, 'triangle', 0.3);
+      setTimeout(() => playTone(659, 'triangle', 0.3), 300);
+      setTimeout(() => playTone(783, 'triangle', 0.5), 600);
+      setTimeout(() => {
+        cardModal.style.display = 'flex';
+      }, 900);
+    }
+
+    function resetGame() {
+      cardModal.style.display = 'none';
+      distance = 1920;
+      planeY = 250;
+      velocity = 0;
+      gameWon = false;
+      bubbles = [];
+      loop();
+    }
+
+    function loop() {
+      update();
+      render();
+      if (!gameWon) requestAnimationFrame(loop);
+    }
+
+    loop();
+  </script>
+</body>
+</html>
