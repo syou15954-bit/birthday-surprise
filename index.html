@@ -24,7 +24,7 @@
     #app-container {
       width: 100%;
       max-width: 440px;
-      height: 620px;
+      height: 640px;
       background: rgba(255, 255, 255, 0.03);
       border: 2px solid rgba(255, 255, 255, 0.15);
       border-radius: 20px;
@@ -37,21 +37,36 @@
       justify-content: center;
     }
 
-    /* Stage 1: Game HUD */
+    /* Top HUD */
     #hud {
       position: absolute;
-      top: 15px;
+      top: 12px;
       width: 92%;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      z-index: 10;
+    }
+    .hud-row {
       display: flex;
       justify-content: space-between;
       align-items: center;
       font-size: 8px;
-      z-index: 10;
       background: rgba(15, 23, 42, 0.85);
       padding: 8px 10px;
       border: 1px solid #38bdf8;
       border-radius: 8px;
     }
+    #waypointBanner {
+      font-size: 7.5px;
+      color: #facc15;
+      text-align: center;
+      background: rgba(0, 0, 0, 0.7);
+      padding: 4px 8px;
+      border-radius: 6px;
+      border: 1px dashed rgba(250, 204, 21, 0.4);
+    }
+
     #gameCanvas {
       width: 100%;
       height: 100%;
@@ -68,7 +83,7 @@
       z-index: 5;
     }
 
-    /* Modal / Stages Screens */
+    /* Screen Overlays */
     .screen-overlay {
       position: absolute;
       inset: 0;
@@ -83,7 +98,6 @@
       animation: fadeIn 0.5s ease;
     }
 
-    /* Buttons */
     .btn-action {
       font-family: 'Press Start 2P', monospace;
       font-size: 9px;
@@ -122,7 +136,7 @@
       margin-top: 10px;
     }
 
-    /* Cake & Candles */
+    /* Cake & Candle */
     .cake-container { position: relative; margin: 25px 0 15px; cursor: pointer; }
     .candles { display: flex; gap: 20px; justify-content: center; margin-bottom: -5px; }
     .candle {
@@ -194,20 +208,23 @@
 
     <!-- HUD -->
     <div id="hud">
-      <span id="heartsContainer">❤️❤️❤️</span>
-      <span>✈️ SIN</span>
-      <span id="distText" style="color: #38bdf8;">1,920 KM</span>
+      <div class="hud-row">
+        <span id="heartsContainer">❤️❤️❤️</span>
+        <span>⭐ <span id="scoreText">0</span></span>
+        <span id="distText" style="color: #38bdf8;">1,920 KM</span>
+      </div>
+      <div id="waypointBanner">🇲🇲 DEPARTING YANGON AIRSPACE</div>
     </div>
 
     <canvas id="gameCanvas" width="400" height="600"></canvas>
-    <div id="tapGuide">👆 TAP TO DODGE STORMS ⛈️</div>
+    <div id="tapGuide">👆 TAP TO DODGE STORMS & BIRDS</div>
 
-    <!-- GAME OVER / TURBULENCE SCREEN -->
+    <!-- GAME OVER -->
     <div id="stage-gameover" class="screen-overlay">
       <div style="font-size: 32px; margin-bottom: 12px;">⛈️⚡</div>
       <h3 style="font-size: 11px; color: #f43f5e; margin-bottom: 12px;">MAYDAY! TURBULENCE!</h3>
       <p style="font-family: 'Padauk'; font-size: 13px; color: #cbd5e1; line-height: 1.6; margin-bottom: 10px;">
-        လေယာဉ်လေး မိုးကြိုးမုန်တိုင်းမိသွားတယ် ချစ်လေးရေ... ❤️<br>စိတ်မညစ်နဲ့နော်၊ စင်ကာပူအရောက် ပြန်ပျံကြမယ်!
+        လေပြင်းမုန်တိုင်း မိသွားတယ် ချစ်လေးရေ... ❤️<br>စိတ်မညစ်နဲ့နော်၊ စင်ကာပူရောက်အောင် ပြန်ကြိုးစားကြမယ်!
       </p>
       <button class="btn-action" onclick="restartFlight()">TRY AGAIN 🔄</button>
     </div>
@@ -224,7 +241,7 @@
           <span>SIN</span>
         </div>
         <div style="font-size: 11px; color: #64748b; margin-bottom: 4px;">PASSENGER: ချစ်ရသူလေး</div>
-        <div style="font-size: 11px; color: #64748b;">MISSION: မုန်တိုင်းတွေကို ကျော်ဖြတ်နိုင်ခဲ့ပြီ ❤️</div>
+        <div style="font-size: 11px; color: #64748b;">FLIGHT: ၁,၉၂၀ KM အောင်မြင်စွာ ပျံသန်းပြီးစီး ✔️</div>
         <div class="stamp">IMMIGRATION: CLEARED ✔️</div>
       </div>
       <button class="btn-action" onclick="goToStage('cake')">RECEIVE GIFT 🎁</button>
@@ -274,24 +291,25 @@
     const ctx = canvas.getContext('2d');
     const distText = document.getElementById('distText');
     const heartsContainer = document.getElementById('heartsContainer');
+    const scoreText = document.getElementById('scoreText');
+    const waypointBanner = document.getElementById('waypointBanner');
 
     let distance = 1920;
     let planeY = 300;
     let velocity = 0;
-    let gravity = 0.28;
-    let lift = -5.5;
+    let gravity = 0.26;
+    let lift = -5.3;
     let isGameOver = false;
     let isGameWon = false;
     let hearts = 3;
+    let score = 0;
     let invulnerableTimer = 0;
     let blownCount = 0;
 
-    // Obstacles and Collectibles
     let obstacles = [];
     let items = [];
     let frameCount = 0;
 
-    // Web Audio Sound FX
     const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
     function playBeep(freq, dur, type = 'sine') {
       if (audioCtx.state === 'suspended') audioCtx.resume();
@@ -315,10 +333,8 @@
     window.addEventListener('touchstart', (e) => { if(e.target === canvas) { e.preventDefault(); flap(); } }, { passive: false });
     window.addEventListener('mousedown', (e) => { if(e.target === canvas) flap(); });
 
-    // Drawing Plane
     function drawPixelPlane(x, y) {
-      if (invulnerableTimer > 0 && Math.floor(invulnerableTimer / 5) % 2 === 0) return; // Flash effect when hit
-
+      if (invulnerableTimer > 0 && Math.floor(invulnerableTimer / 5) % 2 === 0) return;
       ctx.fillStyle = "#ffffff";
       ctx.fillRect(x, y + 6, 26, 7);
       ctx.fillRect(x + 10, y, 6, 18);
@@ -328,43 +344,65 @@
       ctx.fillRect(x + 2, y + 3, 5, 5);
     }
 
-    // Drawing Storm Cloud
     function drawStormCloud(x, y) {
       ctx.fillStyle = "#475569";
       ctx.fillRect(x + 8, y, 34, 14);
       ctx.fillRect(x, y + 8, 48, 16);
-      // Lightning bolt
       ctx.fillStyle = "#facc15";
       ctx.fillRect(x + 18, y + 24, 6, 8);
       ctx.fillRect(x + 14, y + 30, 8, 4);
       ctx.fillRect(x + 16, y + 34, 4, 6);
     }
 
-    // Drawing Heart Item
-    function drawHeartItem(x, y) {
-      ctx.fillStyle = "#fb7185";
+    function drawBird(x, y) {
+      ctx.fillStyle = "#cbd5e1";
+      ctx.fillRect(x + 4, y, 4, 4);
+      ctx.fillRect(x, y + 4, 12, 4);
+      ctx.fillRect(x + 8, y + 2, 4, 2);
+    }
+
+    function drawItem(item) {
       ctx.font = "14px monospace";
-      ctx.fillText("❤️", x, y + 12);
+      if (item.type === 'heart') ctx.fillText("❤️", item.x, item.y + 12);
+      if (item.type === 'star') ctx.fillText("⭐", item.x, item.y + 12);
+    }
+
+    function updateWaypoints(d) {
+      if (d > 1400) {
+        waypointBanner.innerText = "🇲🇲 DEPARTING YANGON AIRSPACE";
+      } else if (d > 800) {
+        waypointBanner.innerText = "🇹🇭 FLYING OVER BANGKOK SKY";
+      } else if (d > 300) {
+        waypointBanner.innerText = "🇲🇾 OVER MALAYSIA AIRSPACE";
+      } else {
+        waypointBanner.innerText = "🇸🇬 ENTERING SINGAPORE SKY";
+      }
     }
 
     function spawnGameElements() {
       frameCount++;
-      // Spawn storm clouds
-      if (frameCount % 85 === 0 && distance > 150) {
+      // Spawn storm clouds or birds
+      if (frameCount % 80 === 0 && distance > 100) {
+        let isBird = Math.random() < 0.35;
         obstacles.push({
           x: canvas.width + 20,
           y: Math.random() * (canvas.height - 180) + 50,
-          w: 48,
-          h: 40
+          w: isBird ? 16 : 48,
+          h: isBird ? 12 : 40,
+          speed: isBird ? 4.5 : 3.2,
+          type: isBird ? 'bird' : 'cloud'
         });
       }
-      // Spawn bonus hearts occasionally
-      if (frameCount % 240 === 0 && distance > 150) {
+
+      // Spawn bonus Stars & Hearts
+      if (frameCount % 100 === 0 && distance > 100) {
+        let isHeart = Math.random() < 0.25;
         items.push({
           x: canvas.width + 20,
           y: Math.random() * (canvas.height - 160) + 60,
-          w: 18,
-          h: 18
+          w: 16,
+          h: 16,
+          type: isHeart ? 'heart' : 'star'
         });
       }
     }
@@ -379,26 +417,26 @@
 
       if (invulnerableTimer > 0) invulnerableTimer--;
 
-      // Reduce distance
+      // Realistic flight duration (~1 to 1.5 minutes)
       if (distance > 0) {
-        distance -= 4;
+        distance -= 0.75;
         if (distance < 0) distance = 0;
-        distText.innerText = distance + " KM";
+        distText.innerText = Math.floor(distance) + " KM";
+        updateWaypoints(distance);
       } else {
         isGameWon = true;
-        confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
+        confetti({ particleCount: 120, spread: 80, origin: { y: 0.6 } });
         goToStage('arrival');
         return;
       }
 
       spawnGameElements();
 
-      // Move & collide obstacles
+      // Obstacles
       for (let i = obstacles.length - 1; i >= 0; i--) {
         let obs = obstacles[i];
-        obs.x -= 3.5;
+        obs.x -= obs.speed;
 
-        // Collision box with plane (x: 50, y: planeY, w: 26, h: 18)
         if (invulnerableTimer === 0 &&
             obs.x < 50 + 26 &&
             obs.x + obs.w > 50 &&
@@ -406,8 +444,8 @@
             obs.y + obs.h > planeY) {
           
           hearts--;
-          invulnerableTimer = 60; // 1 second invulnerability
-          playBeep(180, 0.25, 'sawtooth');
+          invulnerableTimer = 60;
+          playBeep(160, 0.25, 'sawtooth');
           updateHeartsDisplay();
 
           if (hearts <= 0) {
@@ -415,11 +453,10 @@
             return;
           }
         }
-
         if (obs.x < -60) obstacles.splice(i, 1);
       }
 
-      // Move & collect items
+      // Collectibles
       for (let j = items.length - 1; j >= 0; j--) {
         let item = items[j];
         item.x -= 3;
@@ -429,11 +466,15 @@
             item.y < planeY + 18 &&
             item.y + item.h > planeY) {
           
-          if (hearts < 3) {
-            hearts++;
+          if (item.type === 'heart') {
+            if (hearts < 3) hearts++;
             updateHeartsDisplay();
+            playBeep(650, 0.15, 'sine');
+          } else {
+            score += 10;
+            scoreText.innerText = score;
+            playBeep(850, 0.1, 'triangle');
           }
-          playBeep(650, 0.15, 'sine');
           items.splice(j, 1);
         } else if (item.x < -40) {
           items.splice(j, 1);
@@ -458,6 +499,8 @@
       planeY = 300;
       velocity = 0;
       hearts = 3;
+      score = 0;
+      scoreText.innerText = "0";
       obstacles = [];
       items = [];
       invulnerableTimer = 0;
@@ -469,17 +512,19 @@
     function render() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      // Background Stars
+      // Stars
       ctx.fillStyle = "rgba(255, 255, 255, 0.35)";
       ctx.fillRect(80, 100, 2, 2);
       ctx.fillRect(260, 180, 3, 3);
       ctx.fillRect(150, 420, 2, 2);
       ctx.fillRect(320, 320, 2, 2);
 
-      // Render Obstacles & Items
-      obstacles.forEach(obs => drawStormCloud(obs.x, obs.y));
-      items.forEach(item => drawHeartItem(item.x, item.y));
+      obstacles.forEach(obs => {
+        if (obs.type === 'bird') drawBird(obs.x, obs.y);
+        else drawStormCloud(obs.x, obs.y);
+      });
 
+      items.forEach(item => drawItem(item));
       drawPixelPlane(50, planeY);
     }
 
@@ -490,7 +535,6 @@
     }
     loop();
 
-    // Stages & Candle Blow
     function goToStage(stageName) {
       document.querySelectorAll('.screen-overlay').forEach(el => el.style.display = 'none');
       if (stageName === 'arrival') document.getElementById('stage-arrival').style.display = 'flex';
