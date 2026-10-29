@@ -21,16 +21,14 @@
       padding: 10px;
     }
 
-    /* Container Box */
     #app-container {
       width: 100%;
       max-width: 440px;
-      min-height: 640px;
+      height: 620px;
       background: rgba(255, 255, 255, 0.03);
-      border: 2px solid rgba(255, 255, 255, 0.1);
+      border: 2px solid rgba(255, 255, 255, 0.15);
       border-radius: 20px;
-      backdrop-filter: blur(10px);
-      box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.6);
       position: relative;
       overflow: hidden;
       display: flex;
@@ -43,13 +41,14 @@
     #hud {
       position: absolute;
       top: 15px;
-      width: 90%;
+      width: 92%;
       display: flex;
       justify-content: space-between;
-      font-size: 9px;
+      align-items: center;
+      font-size: 8px;
       z-index: 10;
-      background: rgba(15, 23, 42, 0.75);
-      padding: 8px 12px;
+      background: rgba(15, 23, 42, 0.85);
+      padding: 8px 10px;
       border: 1px solid #38bdf8;
       border-radius: 8px;
     }
@@ -61,10 +60,12 @@
     }
     #tapGuide {
       position: absolute;
-      bottom: 20px;
+      bottom: 18px;
       font-size: 8px;
       color: #94a3b8;
+      text-align: center;
       animation: pulse 1.5s infinite;
+      z-index: 5;
     }
 
     /* Modal / Stages Screens */
@@ -79,35 +80,49 @@
       padding: 24px;
       text-align: center;
       z-index: 50;
-      animation: fadeIn 0.6s ease;
+      animation: fadeIn 0.5s ease;
     }
 
-    /* Stage 2: Boarding Pass */
+    /* Buttons */
+    .btn-action {
+      font-family: 'Press Start 2P', monospace;
+      font-size: 9px;
+      background: #f43f5e;
+      color: #fff;
+      border: none;
+      padding: 12px 18px;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-top: 16px;
+      box-shadow: 0 4px 15px rgba(244, 63, 94, 0.4);
+    }
+    .btn-action:active { transform: scale(0.96); }
+
+    /* Boarding Pass */
     .boarding-pass {
       background: #fff;
       color: #1e293b;
       border-radius: 12px;
-      padding: 20px;
+      padding: 18px;
       width: 100%;
-      box-shadow: 0 10px 25px rgba(255,255,255,0.1);
-      font-family: sans-serif;
       text-align: left;
+      font-family: sans-serif;
       border-left: 6px solid #f43f5e;
     }
-    .pass-header { font-size: 11px; font-weight: bold; color: #f43f5e; letter-spacing: 1px; }
-    .pass-route { display: flex; justify-content: space-between; align-items: center; margin: 15px 0; font-size: 20px; font-weight: 800; }
+    .pass-header { font-size: 10px; font-weight: bold; color: #f43f5e; letter-spacing: 1px; }
+    .pass-route { display: flex; justify-content: space-between; align-items: center; margin: 12px 0; font-size: 18px; font-weight: 800; }
     .stamp {
       display: inline-block;
-      padding: 6px 12px;
+      padding: 5px 10px;
       border: 2px dashed #10b981;
       color: #10b981;
       font-family: 'Press Start 2P', monospace;
-      font-size: 9px;
-      transform: rotate(-5deg);
+      font-size: 8px;
+      transform: rotate(-4deg);
       margin-top: 10px;
     }
 
-    /* Stage 3: Interactive Cake */
+    /* Cake & Candles */
     .cake-container { position: relative; margin: 25px 0 15px; cursor: pointer; }
     .candles { display: flex; gap: 20px; justify-content: center; margin-bottom: -5px; }
     .candle {
@@ -140,48 +155,36 @@
       margin: 0 auto;
     }
 
-    /* Stage 4: Polaroid */
+    /* Polaroid */
     .polaroid {
       background: #fff;
-      padding: 12px 12px 30px 12px;
+      padding: 10px 10px 24px 10px;
       border-radius: 4px;
       box-shadow: 0 10px 30px rgba(0,0,0,0.5);
       transform: rotate(-3deg);
-      width: 80%;
-      margin: 15px 0;
+      width: 85%;
+      margin: 12px 0;
     }
-    .polaroid img { width: 100%; height: 180px; object-fit: cover; border-radius: 2px; }
-    .polaroid-caption { font-family: 'Playfair Display', serif; color: #334155; font-size: 14px; margin-top: 10px; font-style: italic; }
+    .polaroid img { width: 100%; height: 170px; object-fit: cover; border-radius: 2px; }
+    .polaroid-caption { font-family: 'Playfair Display', serif; color: #334155; font-size: 13px; margin-top: 8px; font-style: italic; }
 
-    /* Buttons & Typography */
-    .btn-action {
-      font-family: 'Press Start 2P', monospace;
-      font-size: 9px;
-      background: #f43f5e;
-      color: #fff;
-      border: none;
-      padding: 12px 20px;
-      border-radius: 8px;
-      cursor: pointer;
-      margin-top: 18px;
-      box-shadow: 0 4px 15px rgba(244, 63, 94, 0.4);
-    }
+    /* Letter */
     .letter-text {
       font-family: 'Padauk', sans-serif;
-      font-size: 14px;
-      line-height: 1.9;
+      font-size: 13.5px;
+      line-height: 1.8;
       color: #e2e8f0;
       text-align: left;
       background: rgba(255, 255, 255, 0.05);
-      padding: 16px;
+      padding: 14px;
       border-radius: 10px;
       border: 1px solid rgba(255, 255, 255, 0.1);
-      max-height: 300px;
+      max-height: 280px;
       overflow-y: auto;
     }
 
     @keyframes flicker { from { transform: scale(1); } to { transform: scale(1.15) rotate(2deg); } }
-    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
     @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
   </style>
 </head>
@@ -189,33 +192,45 @@
 
   <div id="app-container">
 
-    <!-- STAGE 1: Flight Mini Game -->
+    <!-- HUD -->
     <div id="hud">
-      <span>🇲🇲 YGN ✈️ 🇸🇬 SIN</span>
-      <span id="distText">1,920 KM</span>
+      <span id="heartsContainer">❤️❤️❤️</span>
+      <span>✈️ SIN</span>
+      <span id="distText" style="color: #38bdf8;">1,920 KM</span>
     </div>
-    <canvas id="gameCanvas" width="400" height="600"></canvas>
-    <div id="tapGuide">👆 TAP SCREEN TO FLY TO SINGAPORE</div>
 
-    <!-- STAGE 2: Changi Arrival Boarding Pass -->
+    <canvas id="gameCanvas" width="400" height="600"></canvas>
+    <div id="tapGuide">👆 TAP TO DODGE STORMS ⛈️</div>
+
+    <!-- GAME OVER / TURBULENCE SCREEN -->
+    <div id="stage-gameover" class="screen-overlay">
+      <div style="font-size: 32px; margin-bottom: 12px;">⛈️⚡</div>
+      <h3 style="font-size: 11px; color: #f43f5e; margin-bottom: 12px;">MAYDAY! TURBULENCE!</h3>
+      <p style="font-family: 'Padauk'; font-size: 13px; color: #cbd5e1; line-height: 1.6; margin-bottom: 10px;">
+        လေယာဉ်လေး မိုးကြိုးမုန်တိုင်းမိသွားတယ် ချစ်လေးရေ... ❤️<br>စိတ်မညစ်နဲ့နော်၊ စင်ကာပူအရောက် ပြန်ပျံကြမယ်!
+      </p>
+      <button class="btn-action" onclick="restartFlight()">TRY AGAIN 🔄</button>
+    </div>
+
+    <!-- STAGE 2: Boarding Pass -->
     <div id="stage-arrival" class="screen-overlay">
-      <div style="font-size: 28px; margin-bottom: 12px;">🛬🇸🇬</div>
-      <h3 style="font-size: 12px; color: #38bdf8; margin-bottom: 15px;">SAFELY ARRIVED!</h3>
+      <div style="font-size: 28px; margin-bottom: 10px;">🛬🇸🇬</div>
+      <h3 style="font-size: 11px; color: #38bdf8; margin-bottom: 12px;">SAFELY ARRIVED!</h3>
       <div class="boarding-pass">
-        <div class="pass-header">SPECIAL BOARDING PASS</div>
+        <div class="pass-header">OFFICIAL BOARDING PASS</div>
         <div class="pass-route">
           <span>YGN</span>
           <span style="font-size: 14px; color: #f43f5e;">✈️</span>
           <span>SIN</span>
         </div>
-        <div style="font-size: 12px; color: #64748b; margin-bottom: 5px;">PASSENGER: ချစ်ရသူလေး</div>
-        <div style="font-size: 12px; color: #64748b;">DESTINATION: အနားမှာ အတူရှိခြင်း ❤️</div>
+        <div style="font-size: 11px; color: #64748b; margin-bottom: 4px;">PASSENGER: ချစ်ရသူလေး</div>
+        <div style="font-size: 11px; color: #64748b;">MISSION: မုန်တိုင်းတွေကို ကျော်ဖြတ်နိုင်ခဲ့ပြီ ❤️</div>
         <div class="stamp">IMMIGRATION: CLEARED ✔️</div>
       </div>
       <button class="btn-action" onclick="goToStage('cake')">RECEIVE GIFT 🎁</button>
     </div>
 
-    <!-- STAGE 3: Interactive Birthday Cake -->
+    <!-- STAGE 3: Cake -->
     <div id="stage-cake" class="screen-overlay">
       <h3 style="font-size: 11px; color: #fb7185; line-height: 1.6;">MAKE A WISH &<br>TAP TO BLOW CANDLES!</h3>
       <div class="cake-container">
@@ -230,11 +245,10 @@
       <button id="btnAfterCake" class="btn-action" style="display: none;" onclick="goToStage('polaroid')">VIEW MEMORIES 📸</button>
     </div>
 
-    <!-- STAGE 4: Polaroid Memory Photo -->
+    <!-- STAGE 4: Polaroid -->
     <div id="stage-polaroid" class="screen-overlay">
-      <h3 style="font-size: 11px; color: #38bdf8; margin-bottom: 15px;">FAVORITE MOMENT</h3>
+      <h3 style="font-size: 11px; color: #38bdf8; margin-bottom: 12px;">FAVORITE MOMENT</h3>
       <div class="polaroid">
-        <!-- ဓာတ်ပုံ link ထည့်ရန်နေရာ -->
         <img src="https://images.unsplash.com/photo-1518199266791-5375a83190b7?w=600" alt="Memory">
         <div class="polaroid-caption">"Distance means so little when you mean so much."</div>
       </div>
@@ -243,12 +257,12 @@
 
     <!-- STAGE 5: Letter -->
     <div id="stage-letter" class="screen-overlay">
-      <div style="font-size: 26px; margin-bottom: 8px;">🎂💖</div>
-      <h3 style="font-size: 12px; color: #fb7185; margin-bottom: 12px;">HAPPY BIRTHDAY!</h3>
+      <div style="font-size: 26px; margin-bottom: 6px;">🎂💖</div>
+      <h3 style="font-size: 12px; color: #fb7185; margin-bottom: 10px;">HAPPY BIRTHDAY!</h3>
       <div class="letter-text">
         ချစ်ရတဲ့သူလေးရေ... ❤️<br><br>
-        မွေးနေ့မှာ စိတ်၏ချမ်းသာခြင်း၊ ကိုယ်၏ကျန်းမာခြင်းနဲ့ ပြည့်စုံပါစေ။ စင်ကာပူမှာ တစ်ယောက်တည်း အဝေးရောက်နေပေမဲ့ မင်းအနားမှာ ကိုယ်အမြဲရှိနေတယ်ဆိုတာ မမေ့ပါနဲ့။ ပင်ပန်းတဲ့နေ့တွေမှာ ဒီစာလွှာလေးကိုဖတ်ပြီး အားယူနော်။<br><br>
-        မင်းလိုချင်တဲ့ အိပ်မက်တွေအားလုံး အမြန်ဆုံး အကောင်အထည်ဖော်နိုင်ပါစေ။ Happy Birthday My Love! ✨
+        မွေးနေ့မှာ စိတ်၏ချမ်းသာခြင်း၊ ကိုယ်၏ကျန်းမာခြင်းနဲ့ ပြည့်စုံပါစေ။ စင်ကာပူမှာ တစ်ယောက်တည်း အဝေးရောက်နေပေမဲ့ ချစ်အနားမှာ ကိုယ်အမြဲရှိနေတယ်ဆိုတာ မမေ့ပါနဲ့။ ပင်ပန်းတဲ့နေ့တွေမှာ ဒီစာလွှာလေးကိုဖတ်ပြီး အားယူနော်။<br><br>
+        ချစ်လိုချင်တဲ့ အိပ်မက်တွေအားလုံး အမြန်ဆုံး အကောင်အထည်ဖော်နိုင်ပါစေ။ Happy Birthday My Love! ✨
       </div>
       <button class="btn-action" onclick="location.reload()">FLY AGAIN 🔁</button>
     </div>
@@ -259,21 +273,31 @@
     const canvas = document.getElementById('gameCanvas');
     const ctx = canvas.getContext('2d');
     const distText = document.getElementById('distText');
+    const heartsContainer = document.getElementById('heartsContainer');
 
     let distance = 1920;
     let planeY = 300;
     let velocity = 0;
-    let gravity = 0.25;
-    let lift = -5.2;
-    let gameWon = false;
+    let gravity = 0.28;
+    let lift = -5.5;
+    let isGameOver = false;
+    let isGameWon = false;
+    let hearts = 3;
+    let invulnerableTimer = 0;
     let blownCount = 0;
+
+    // Obstacles and Collectibles
+    let obstacles = [];
+    let items = [];
+    let frameCount = 0;
 
     // Web Audio Sound FX
     const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-    function playBeep(freq, dur) {
+    function playBeep(freq, dur, type = 'sine') {
       if (audioCtx.state === 'suspended') audioCtx.resume();
       const osc = audioCtx.createOscillator();
       const gain = audioCtx.createGain();
+      osc.type = type;
       osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
       gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
       gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + dur);
@@ -283,17 +307,18 @@
       osc.stop(audioCtx.currentTime + dur);
     }
 
-    // Touch controls
     function flap() {
-      if (gameWon) return;
+      if (isGameOver || isGameWon) return;
       velocity = lift;
       playBeep(480, 0.08);
     }
     window.addEventListener('touchstart', (e) => { if(e.target === canvas) { e.preventDefault(); flap(); } }, { passive: false });
     window.addEventListener('mousedown', (e) => { if(e.target === canvas) flap(); });
 
-    // Drawing
+    // Drawing Plane
     function drawPixelPlane(x, y) {
+      if (invulnerableTimer > 0 && Math.floor(invulnerableTimer / 5) % 2 === 0) return; // Flash effect when hit
+
       ctx.fillStyle = "#ffffff";
       ctx.fillRect(x, y + 6, 26, 7);
       ctx.fillRect(x + 10, y, 6, 18);
@@ -303,32 +328,157 @@
       ctx.fillRect(x + 2, y + 3, 5, 5);
     }
 
+    // Drawing Storm Cloud
+    function drawStormCloud(x, y) {
+      ctx.fillStyle = "#475569";
+      ctx.fillRect(x + 8, y, 34, 14);
+      ctx.fillRect(x, y + 8, 48, 16);
+      // Lightning bolt
+      ctx.fillStyle = "#facc15";
+      ctx.fillRect(x + 18, y + 24, 6, 8);
+      ctx.fillRect(x + 14, y + 30, 8, 4);
+      ctx.fillRect(x + 16, y + 34, 4, 6);
+    }
+
+    // Drawing Heart Item
+    function drawHeartItem(x, y) {
+      ctx.fillStyle = "#fb7185";
+      ctx.font = "14px monospace";
+      ctx.fillText("❤️", x, y + 12);
+    }
+
+    function spawnGameElements() {
+      frameCount++;
+      // Spawn storm clouds
+      if (frameCount % 85 === 0 && distance > 150) {
+        obstacles.push({
+          x: canvas.width + 20,
+          y: Math.random() * (canvas.height - 180) + 50,
+          w: 48,
+          h: 40
+        });
+      }
+      // Spawn bonus hearts occasionally
+      if (frameCount % 240 === 0 && distance > 150) {
+        items.push({
+          x: canvas.width + 20,
+          y: Math.random() * (canvas.height - 160) + 60,
+          w: 18,
+          h: 18
+        });
+      }
+    }
+
     function update() {
-      if (gameWon) return;
+      if (isGameOver || isGameWon) return;
+
       velocity += gravity;
       planeY += velocity;
-      if (planeY > canvas.height - 40) planeY = canvas.height - 40;
-      if (planeY < 30) planeY = 30;
+      if (planeY > canvas.height - 35) planeY = canvas.height - 35;
+      if (planeY < 25) planeY = 25;
 
+      if (invulnerableTimer > 0) invulnerableTimer--;
+
+      // Reduce distance
       if (distance > 0) {
-        distance -= 4; // ခရီးအကွာအဝေး လျော့ကျနှုန်း
+        distance -= 4;
         if (distance < 0) distance = 0;
         distText.innerText = distance + " KM";
       } else {
-        gameWon = true;
-        confetti({ particleCount: 80, spread: 60, origin: { y: 0.6 } });
+        isGameWon = true;
+        confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
         goToStage('arrival');
+        return;
       }
+
+      spawnGameElements();
+
+      // Move & collide obstacles
+      for (let i = obstacles.length - 1; i >= 0; i--) {
+        let obs = obstacles[i];
+        obs.x -= 3.5;
+
+        // Collision box with plane (x: 50, y: planeY, w: 26, h: 18)
+        if (invulnerableTimer === 0 &&
+            obs.x < 50 + 26 &&
+            obs.x + obs.w > 50 &&
+            obs.y < planeY + 18 &&
+            obs.y + obs.h > planeY) {
+          
+          hearts--;
+          invulnerableTimer = 60; // 1 second invulnerability
+          playBeep(180, 0.25, 'sawtooth');
+          updateHeartsDisplay();
+
+          if (hearts <= 0) {
+            triggerGameOver();
+            return;
+          }
+        }
+
+        if (obs.x < -60) obstacles.splice(i, 1);
+      }
+
+      // Move & collect items
+      for (let j = items.length - 1; j >= 0; j--) {
+        let item = items[j];
+        item.x -= 3;
+
+        if (item.x < 50 + 26 &&
+            item.x + item.w > 50 &&
+            item.y < planeY + 18 &&
+            item.y + item.h > planeY) {
+          
+          if (hearts < 3) {
+            hearts++;
+            updateHeartsDisplay();
+          }
+          playBeep(650, 0.15, 'sine');
+          items.splice(j, 1);
+        } else if (item.x < -40) {
+          items.splice(j, 1);
+        }
+      }
+    }
+
+    function updateHeartsDisplay() {
+      let str = "";
+      for (let i = 0; i < hearts; i++) str += "❤️";
+      heartsContainer.innerText = str || "💔";
+    }
+
+    function triggerGameOver() {
+      isGameOver = true;
+      document.getElementById('stage-gameover').style.display = 'flex';
+    }
+
+    function restartFlight() {
+      document.getElementById('stage-gameover').style.display = 'none';
+      distance = 1920;
+      planeY = 300;
+      velocity = 0;
+      hearts = 3;
+      obstacles = [];
+      items = [];
+      invulnerableTimer = 0;
+      isGameOver = false;
+      updateHeartsDisplay();
+      loop();
     }
 
     function render() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      // Stars / Dust
-      ctx.fillStyle = "rgba(255, 255, 255, 0.4)";
+
+      // Background Stars
+      ctx.fillStyle = "rgba(255, 255, 255, 0.35)";
       ctx.fillRect(80, 100, 2, 2);
-      ctx.fillRect(250, 180, 3, 3);
+      ctx.fillRect(260, 180, 3, 3);
       ctx.fillRect(150, 420, 2, 2);
       ctx.fillRect(320, 320, 2, 2);
+
+      // Render Obstacles & Items
+      obstacles.forEach(obs => drawStormCloud(obs.x, obs.y));
+      items.forEach(item => drawHeartItem(item.x, item.y));
 
       drawPixelPlane(50, planeY);
     }
@@ -336,11 +486,11 @@
     function loop() {
       update();
       render();
-      if (!gameWon) requestAnimationFrame(loop);
+      if (!isGameOver && !isGameWon) requestAnimationFrame(loop);
     }
     loop();
 
-    // Stage Navigation
+    // Stages & Candle Blow
     function goToStage(stageName) {
       document.querySelectorAll('.screen-overlay').forEach(el => el.style.display = 'none');
       if (stageName === 'arrival') document.getElementById('stage-arrival').style.display = 'flex';
@@ -349,7 +499,6 @@
       if (stageName === 'letter') document.getElementById('stage-letter').style.display = 'flex';
     }
 
-    // Candle Blow Interaction
     function blowCandle(flameEl) {
       if (flameEl.classList.contains('extinguished')) return;
       flameEl.classList.add('extinguished');
