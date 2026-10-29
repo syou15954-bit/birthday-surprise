@@ -57,6 +57,15 @@
       border: 1px solid #38bdf8;
       border-radius: 8px;
     }
+    .hud-center {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+    #musicBtn {
+      font-size: 11px;
+      cursor: pointer;
+    }
     #waypointBanner {
       font-size: 7.5px;
       color: #facc15;
@@ -204,13 +213,19 @@
 </head>
 <body>
 
+  <!-- Audio Element -->
+  <audio id="bgMusic" src="music.mp3" loop preload="auto"></audio>
+
   <div id="app-container">
 
     <!-- HUD -->
     <div id="hud">
       <div class="hud-row">
         <span id="heartsContainer">❤️❤️❤️</span>
-        <span>⭐ <span id="scoreText">0</span></span>
+        <div class="hud-center">
+          <span>⭐ <span id="scoreText">0</span></span>
+          <span id="musicBtn" onclick="toggleMusic()" title="Sound Toggle">🔊</span>
+        </div>
         <span id="distText" style="color: #38bdf8;">1,920 KM</span>
       </div>
       <div id="waypointBanner">🇲🇲 DEPARTING YANGON AIRSPACE</div>
@@ -219,7 +234,7 @@
     <canvas id="gameCanvas" width="400" height="600"></canvas>
     <div id="tapGuide">👆 TAP TO DODGE STORMS & BIRDS</div>
 
-    <!-- GAME OVER -->
+    <!-- GAME OVER SCREEN -->
     <div id="stage-gameover" class="screen-overlay">
       <div style="font-size: 32px; margin-bottom: 12px;">⛈️⚡</div>
       <h3 style="font-size: 11px; color: #f43f5e; margin-bottom: 12px;">MAYDAY! TURBULENCE!</h3>
@@ -293,6 +308,8 @@
     const heartsContainer = document.getElementById('heartsContainer');
     const scoreText = document.getElementById('scoreText');
     const waypointBanner = document.getElementById('waypointBanner');
+    const bgMusic = document.getElementById('bgMusic');
+    const musicBtn = document.getElementById('musicBtn');
 
     let distance = 1920;
     let planeY = 300;
@@ -305,11 +322,13 @@
     let score = 0;
     let invulnerableTimer = 0;
     let blownCount = 0;
+    let musicStarted = false;
 
     let obstacles = [];
     let items = [];
     let frameCount = 0;
 
+    // Web Audio Sound FX for actions
     const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
     function playBeep(freq, dur, type = 'sine') {
       if (audioCtx.state === 'suspended') audioCtx.resume();
@@ -327,11 +346,37 @@
 
     function flap() {
       if (isGameOver || isGameWon) return;
+
+      // Start music on first tap
+      if (!musicStarted) {
+        bgMusic.play().catch(e => console.log("Audio play blocked until interaction:", e));
+        musicStarted = true;
+      }
+
       velocity = lift;
       playBeep(480, 0.08);
     }
-    window.addEventListener('touchstart', (e) => { if(e.target === canvas) { e.preventDefault(); flap(); } }, { passive: false });
-    window.addEventListener('mousedown', (e) => { if(e.target === canvas) flap(); });
+
+    window.addEventListener('touchstart', (e) => { 
+      if (e.target === canvas) { 
+        e.preventDefault(); 
+        flap(); 
+      } 
+    }, { passive: false });
+
+    window.addEventListener('mousedown', (e) => { 
+      if (e.target === canvas) flap(); 
+    });
+
+    function toggleMusic() {
+      if (bgMusic.paused) {
+        bgMusic.play();
+        musicBtn.innerText = "🔊";
+      } else {
+        bgMusic.pause();
+        musicBtn.innerText = "🔇";
+      }
+    }
 
     function drawPixelPlane(x, y) {
       if (invulnerableTimer > 0 && Math.floor(invulnerableTimer / 5) % 2 === 0) return;
@@ -381,7 +426,6 @@
 
     function spawnGameElements() {
       frameCount++;
-      // Spawn storm clouds or birds
       if (frameCount % 80 === 0 && distance > 100) {
         let isBird = Math.random() < 0.35;
         obstacles.push({
@@ -394,7 +438,6 @@
         });
       }
 
-      // Spawn bonus Stars & Hearts
       if (frameCount % 100 === 0 && distance > 100) {
         let isHeart = Math.random() < 0.25;
         items.push({
@@ -417,7 +460,7 @@
 
       if (invulnerableTimer > 0) invulnerableTimer--;
 
-      // Realistic flight duration (~1 to 1.5 minutes)
+      // Duration: ~1 to 1.5 minutes
       if (distance > 0) {
         distance -= 0.75;
         if (distance < 0) distance = 0;
