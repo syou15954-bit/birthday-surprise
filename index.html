@@ -286,9 +286,9 @@
       <button class="btn-action" onclick="restartFlight()">TRY AGAIN 🔄</button>
     </div>
 
-    <!-- STAGE 2: Boarding Pass -->
+    <!-- STAGE 2: Boarding Pass with Fireworks Celebrations -->
     <div id="stage-arrival" class="screen-overlay">
-      <div style="font-size: 28px; margin-bottom: 10px;">🛬🇸🇬</div>
+      <div style="font-size: 28px; margin-bottom: 10px;">🎆🛬🇸🇬🎆</div>
       <h3 style="font-size: 11px; color: #38bdf8; margin-bottom: 12px;">SAFELY ARRIVED IN SINGAPORE!</h3>
       <div class="boarding-pass">
         <div class="pass-header">SPECIAL DELIVERY • TO MY LOVE</div>
@@ -297,8 +297,8 @@
           <span style="font-size: 14px; color: #f43f5e;">✈️</span>
           <span>SIN</span>
         </div>
-        <div style="font-size: 11px; color: #1e293b; font-weight: bold; margin-bottom: 4px;">PASSENGER: ရန်ကုန်ကနေချစ်အနားကိုလာနေပါပိ ❤️</div>
-        <div style="font-size: 10px; color: #64748b; margin-bottom: 4px;">DESTINATION: စင်ကာပူက ချစ်သူအနားကိုရောက်ပါပိဗျာ တော်လိုက်တဲ့ချစ်သူလေး</div>
+        <div style="font-size: 11px; color: #1e293b; font-weight: bold; margin-bottom: 4px;">PASSENGER: ရန်ကုန်က ကိုယ် ❤️</div>
+        <div style="font-size: 10px; color: #64748b; margin-bottom: 4px;">DESTINATION: စင်ကာပူက ချစ်လေးအနားကို</div>
         <div style="font-size: 10px; color: #64748b;">MISSION: ၁,၉၂၀ KM ကျော်ဖြတ်ပြီး မွေးနေ့လက်ဆောင် လာပို့ခြင်း ✔️</div>
         <div class="stamp">IMMIGRATION: CLEARED ✔️</div>
       </div>
@@ -484,15 +484,171 @@
       });
     }
 
-    function drawPixelPlane(x, y) {
+    // MULTI-COLOR CELEBRATION FIREWORKS
+    function launchArrivalFireworks() {
+      const duration = 4.5 * 1000;
+      const animationEnd = Date.now() + duration;
+      const defaults = { startVelocity: 35, spread: 360, ticks: 75, zIndex: 100 };
+
+      function randomInRange(min, max) {
+        return Math.random() * (max - min) + min;
+      }
+
+      // Celebratory pop sound chords
+      playBeep(520, 0.2, 'triangle');
+      setTimeout(() => playBeep(660, 0.25, 'triangle'), 250);
+      setTimeout(() => playBeep(880, 0.35, 'sine'), 500);
+
+      const interval = setInterval(function() {
+        const timeLeft = animationEnd - Date.now();
+        if (timeLeft <= 0) {
+          return clearInterval(interval);
+        }
+        const particleCount = 45 * (timeLeft / duration);
+
+        // Burst 1: Left sky fireworks
+        confetti({
+          ...defaults,
+          particleCount,
+          origin: { x: randomInRange(0.15, 0.45), y: Math.random() * 0.45 + 0.1 },
+          colors: ['#f43f5e', '#38bdf8', '#facc15', '#a855f7', '#34d399', '#ffffff'],
+          shapes: ['star', 'circle']
+        });
+
+        // Burst 2: Right sky fireworks
+        confetti({
+          ...defaults,
+          particleCount,
+          origin: { x: randomInRange(0.55, 0.85), y: Math.random() * 0.45 + 0.1 },
+          colors: ['#f43f5e', '#fb7185', '#facc15', '#ec4899', '#60a5fa', '#ffffff'],
+          shapes: ['star', 'circle']
+        });
+      }, 300);
+    }
+
+    // REALISTIC PASSENGER JET VECTOR DRAWING
+    function drawRealisticAirliner(x, y) {
       if (invulnerableTimer > 0 && Math.floor(invulnerableTimer / 5) % 2 === 0) return;
-      ctx.fillStyle = "#ffffff";
-      ctx.fillRect(x, y + 6, 26, 7);
-      ctx.fillRect(x + 10, y, 6, 18);
-      ctx.fillStyle = "#38bdf8";
-      ctx.fillRect(x + 20, y + 7, 4, 4);
+
+      ctx.save();
+      ctx.translate(x + 20, y + 10);
+
+      let pitchAngle = Math.min(Math.max(velocity * 0.04, -0.32), 0.35);
+      ctx.rotate(pitchAngle);
+
+      // 1. Jet Contrail
+      ctx.fillStyle = "rgba(186, 230, 253, 0.6)";
+      ctx.fillRect(-32, 5, 12, 2);
+      ctx.fillStyle = "rgba(255, 255, 255, 0.3)";
+      ctx.fillRect(-45, 4, 14, 4);
+
+      // 2. Background Wing
+      ctx.fillStyle = "#94a3b8";
+      ctx.beginPath();
+      ctx.moveTo(2, -2);
+      ctx.lineTo(-6, -14);
+      ctx.lineTo(0, -14);
+      ctx.lineTo(10, -2);
+      ctx.closePath();
+      ctx.fill();
+
+      // 3. Rear Stabilizer
+      ctx.fillStyle = "#64748b";
+      ctx.beginPath();
+      ctx.moveTo(-16, -2);
+      ctx.lineTo(-24, -8);
+      ctx.lineTo(-20, -8);
+      ctx.lineTo(-12, -2);
+      ctx.closePath();
+      ctx.fill();
+
+      // 4. Main Fuselage
+      let fuselageGrad = ctx.createLinearGradient(0, -7, 0, 8);
+      fuselageGrad.addColorStop(0, "#ffffff");
+      fuselageGrad.addColorStop(0.55, "#f1f5f9");
+      fuselageGrad.addColorStop(1, "#cbd5e1");
+      ctx.fillStyle = fuselageGrad;
+
+      ctx.beginPath();
+      ctx.moveTo(25, 1);
+      ctx.bezierCurveTo(23, -5, 16, -6, 5, -6);
+      ctx.lineTo(-18, -6);
+      ctx.lineTo(-26, -2);
+      ctx.lineTo(-26, 2);
+      ctx.lineTo(-18, 6);
+      ctx.lineTo(8, 6);
+      ctx.bezierCurveTo(18, 6, 23, 4, 25, 1);
+      ctx.closePath();
+      ctx.fill();
+
+      // Airline Red Ribbon Stripe
       ctx.fillStyle = "#f43f5e";
-      ctx.fillRect(x + 2, y + 3, 5, 5);
+      ctx.beginPath();
+      ctx.moveTo(15, 2);
+      ctx.lineTo(-24, 2);
+      ctx.lineTo(-23, 4);
+      ctx.lineTo(13, 4);
+      ctx.closePath();
+      ctx.fill();
+
+      // 5. Tail Fin
+      ctx.fillStyle = "#f43f5e";
+      ctx.beginPath();
+      ctx.moveTo(-12, -6);
+      ctx.lineTo(-22, -19);
+      ctx.lineTo(-15, -19);
+      ctx.lineTo(-5, -6);
+      ctx.closePath();
+      ctx.fill();
+
+      // Tail Logo Heart
+      ctx.fillStyle = "#facc15";
+      ctx.font = "8px sans-serif";
+      ctx.fillText("❤️", -19, -11);
+
+      // 6. Cockpit Windshield
+      ctx.fillStyle = "#0f172a";
+      ctx.beginPath();
+      ctx.moveTo(16, -4);
+      ctx.lineTo(20, -1);
+      ctx.lineTo(15, -1);
+      ctx.lineTo(14, -4);
+      ctx.closePath();
+      ctx.fill();
+      ctx.fillStyle = "#38bdf8";
+      ctx.fillRect(15, -3, 2, 2);
+
+      // 7. Cabin Windows
+      ctx.fillStyle = "#1e293b";
+      for (let w = -12; w <= 8; w += 4) {
+        ctx.fillRect(w, -2, 2, 2);
+      }
+
+      // 8. Foreground Wing
+      let wingGrad = ctx.createLinearGradient(0, 0, 0, 16);
+      wingGrad.addColorStop(0, "#f8fafc");
+      wingGrad.addColorStop(1, "#94a3b8");
+      ctx.fillStyle = wingGrad;
+      ctx.beginPath();
+      ctx.moveTo(8, 2);
+      ctx.lineTo(-6, 17);
+      ctx.lineTo(0, 17);
+      ctx.lineTo(14, 2);
+      ctx.closePath();
+      ctx.fill();
+
+      ctx.fillStyle = "#f43f5e";
+      ctx.fillRect(-6, 14, 2, 4);
+
+      // 9. Jet Engine
+      ctx.fillStyle = "#334155";
+      ctx.fillRect(-2, 6, 11, 5);
+      ctx.fillStyle = "#0f172a";
+      ctx.fillRect(7, 7, 2, 3);
+      ctx.fillStyle = "#38bdf8";
+      ctx.fillRect(-3, 7, 2, 2);
+
+      ctx.restore();
     }
 
     function drawStormCloud(x, y) {
@@ -572,9 +728,10 @@
         distText.innerText = Math.floor(distance) + " KM";
         updateWaypoints(distance);
       } else {
+        // Safe arrival: trigger fireworks show
         isGameWon = true;
         stopGameMusic();
-        confetti({ particleCount: 120, spread: 80, origin: { y: 0.6 } });
+        launchArrivalFireworks();
         goToStage('arrival');
         return;
       }
@@ -586,10 +743,10 @@
         obs.x -= obs.speed;
 
         if (invulnerableTimer === 0 &&
-            obs.x < 50 + 26 &&
+            obs.x < 50 + 34 &&
             obs.x + obs.w > 50 &&
-            obs.y < planeY + 18 &&
-            obs.y + obs.h > planeY) {
+            obs.y < planeY + 20 &&
+            obs.y + obs.h > planeY - 4) {
           
           hearts--;
           invulnerableTimer = 60;
@@ -608,10 +765,10 @@
         let item = items[j];
         item.x -= 3;
 
-        if (item.x < 50 + 26 &&
+        if (item.x < 50 + 34 &&
             item.x + item.w > 50 &&
-            item.y < planeY + 18 &&
-            item.y + item.h > planeY) {
+            item.y < planeY + 20 &&
+            item.y + item.h > planeY - 4) {
           
           if (item.type === 'heart') {
             if (hearts < 3) hearts++;
@@ -681,7 +838,7 @@
       });
 
       items.forEach(item => drawItem(item));
-      drawPixelPlane(50, planeY);
+      drawRealisticAirliner(50, planeY);
     }
 
     function loop() {
