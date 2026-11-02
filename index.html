@@ -101,7 +101,7 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      padding: 24px;
+      padding: 20px;
       text-align: center;
       z-index: 50;
       animation: fadeIn 0.5s ease;
@@ -116,7 +116,7 @@
       padding: 12px 18px;
       border-radius: 8px;
       cursor: pointer;
-      margin-top: 16px;
+      margin-top: 14px;
       box-shadow: 0 4px 15px rgba(244, 63, 94, 0.4);
     }
     .btn-action:active { transform: scale(0.96); }
@@ -203,10 +203,10 @@
       font-style: italic;
     }
 
-    /* Letter */
+    /* Letter & Voice Note Section */
     .letter-text {
       font-family: 'Padauk', sans-serif;
-      font-size: 13.5px;
+      font-size: 13px;
       line-height: 1.8;
       color: #e2e8f0;
       text-align: left;
@@ -214,9 +214,38 @@
       padding: 14px;
       border-radius: 10px;
       border: 1px solid rgba(255, 255, 255, 0.1);
-      max-height: 280px;
+      max-height: 200px;
       overflow-y: auto;
+      margin-bottom: 12px;
     }
+
+    /* Cassette Voice Note Player UI */
+    .voice-card {
+      width: 100%;
+      background: #1e1b4b;
+      border: 2px dashed #f43f5e;
+      border-radius: 12px;
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      box-shadow: 0 4px 15px rgba(244, 63, 94, 0.2);
+    }
+    .voice-btn {
+      font-family: 'Press Start 2P', monospace;
+      font-size: 8px;
+      background: #ec4899;
+      color: #fff;
+      border: none;
+      padding: 8px 14px;
+      border-radius: 6px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .voice-btn:active { transform: scale(0.95); }
 
     @keyframes flicker { from { transform: scale(1); } to { transform: scale(1.15) rotate(2deg); } }
     @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
@@ -225,8 +254,9 @@
 </head>
 <body>
 
-  <!-- Audio Element -->
+  <!-- Audio Elements -->
   <audio id="bgMusic" src="music.mp3" loop preload="auto"></audio>
+  <audio id="voiceNote" src="voicenote.mp3" preload="metadata"></audio>
 
   <div id="app-container">
 
@@ -267,7 +297,7 @@
           <span style="font-size: 14px; color: #f43f5e;">✈️</span>
           <span>SIN</span>
         </div>
-        <div style="font-size: 11px; color: #64748b; margin-bottom: 4px;">PASSENGER: ချစ်သူလေးအနားကို ရောက်လာပါပြီဗျ</div>
+        <div style="font-size: 11px; color: #64748b; margin-bottom: 4px;">PASSENGER: ချစ်ရသူလေး</div>
         <div style="font-size: 11px; color: #64748b;">FLIGHT: ၁,၉၂၀ KM အောင်မြင်စွာ ပျံသန်းပြီးစီး ✔️</div>
         <div class="stamp">IMMIGRATION: CLEARED ✔️</div>
       </div>
@@ -293,22 +323,32 @@
     <div id="stage-polaroid" class="screen-overlay">
       <h3 style="font-size: 11px; color: #38bdf8; margin-bottom: 12px;">FAVORITE MOMENT</h3>
       <div class="polaroid">
-        <!-- photo.jpg ကို တိုက်ရိုက်ချိတ်ဆက်ထားပြီး မရှိပါက fallback ပုံ ပြသပါမည် -->
         <img src="photo.jpg" alt="Our Memory" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1518199266791-5375a83190b7?w=600';">
         <div class="polaroid-caption">"Distance means so little when you mean so much."</div>
       </div>
       <button class="btn-action" onclick="goToStage('letter')">READ LETTER 💌</button>
     </div>
 
-    <!-- STAGE 5: Letter -->
+    <!-- STAGE 5: Letter & Voice Note -->
     <div id="stage-letter" class="screen-overlay">
-      <div style="font-size: 26px; margin-bottom: 6px;">🎂💖</div>
-      <h3 style="font-size: 12px; color: #fb7185; margin-bottom: 10px;">HAPPY BIRTHDAY!</h3>
+      <div style="font-size: 24px; margin-bottom: 6px;">🎂💖</div>
+      <h3 style="font-size: 11px; color: #fb7185; margin-bottom: 10px;">HAPPY BIRTHDAY!</h3>
+      
       <div class="letter-text">
         ချစ်ရတဲ့သူလေးရေ... ❤️<br><br>
         မွေးနေ့မှာ စိတ်၏ချမ်းသာခြင်း၊ ကိုယ်၏ကျန်းမာခြင်းနဲ့ ပြည့်စုံပါစေ။ စင်ကာပူမှာ တစ်ယောက်တည်း အဝေးရောက်နေပေမဲ့ ချစ်အနားမှာ ကိုယ်အမြဲရှိနေတယ်ဆိုတာ မမေ့ပါနဲ့။ ပင်ပန်းတဲ့နေ့တွေမှာ ဒီစာလွှာလေးကိုဖတ်ပြီး အားယူနော်။<br><br>
         ချစ်လိုချင်တဲ့ အိပ်မက်တွေအားလုံး အမြန်ဆုံး အကောင်အထည်ဖော်နိုင်ပါစေ။ Happy Birthday My Love! ✨
       </div>
+
+      <!-- Cassette Voice Note -->
+      <div class="voice-card">
+        <div style="font-size: 8px; color: #f43f5e; letter-spacing: 1px;">🎙️ MY VOICE FOR YOU</div>
+        <div style="display: flex; align-items: center; gap: 10px; margin-top: 4px;">
+          <button id="voicePlayBtn" class="voice-btn" onclick="toggleVoiceNote()">▶️ PLAY</button>
+          <span id="voiceStatus" style="font-size: 8px; color: #94a3b8;">0:00</span>
+        </div>
+      </div>
+
       <button class="btn-action" onclick="location.reload()">FLY AGAIN 🔁</button>
     </div>
 
@@ -323,6 +363,11 @@
     const waypointBanner = document.getElementById('waypointBanner');
     const bgMusic = document.getElementById('bgMusic');
     const musicBtn = document.getElementById('musicBtn');
+
+    // Voice Note Elements
+    const voiceNote = document.getElementById('voiceNote');
+    const voicePlayBtn = document.getElementById('voicePlayBtn');
+    const voiceStatus = document.getElementById('voiceStatus');
 
     let distance = 1920;
     let planeY = 300;
@@ -341,7 +386,6 @@
     let items = [];
     let frameCount = 0;
 
-    // Web Audio Sound FX
     const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
     function playBeep(freq, dur, type = 'sine') {
       if (audioCtx.state === 'suspended') audioCtx.resume();
@@ -357,7 +401,6 @@
       osc.stop(audioCtx.currentTime + dur);
     }
 
-    // Start Music on any first interaction (Tap / Click)
     function startMusic() {
       if (!musicStarted && bgMusic) {
         bgMusic.play().then(() => {
@@ -398,6 +441,42 @@
         bgMusic.pause();
         musicBtn.innerText = "🔇";
       }
+    }
+
+    // Voice Note Logic (Auto Ducking Background Music)
+    function toggleVoiceNote() {
+      if (!voiceNote) return;
+      if (voiceNote.paused) {
+        if (bgMusic && !bgMusic.paused) {
+          bgMusic.pause();
+          musicBtn.innerText = "🔇";
+        }
+        voiceNote.play();
+        voicePlayBtn.innerText = "⏸️ PAUSE";
+      } else {
+        voiceNote.pause();
+        voicePlayBtn.innerText = "▶️ PLAY";
+        if (bgMusic && musicStarted) {
+          bgMusic.play();
+          musicBtn.innerText = "🔊";
+        }
+      }
+    }
+
+    if (voiceNote) {
+      voiceNote.addEventListener('timeupdate', () => {
+        let mins = Math.floor(voiceNote.currentTime / 60);
+        let secs = Math.floor(voiceNote.currentTime % 60);
+        voiceStatus.innerText = `${mins}:${secs < 10 ? '0' : ''}${secs}`;
+      });
+
+      voiceNote.addEventListener('ended', () => {
+        voicePlayBtn.innerText = "▶️ REPLAY";
+        if (bgMusic && musicStarted) {
+          bgMusic.play();
+          musicBtn.innerText = "🔊";
+        }
+      });
     }
 
     function drawPixelPlane(x, y) {
@@ -496,7 +575,6 @@
 
       spawnGameElements();
 
-      // Obstacles
       for (let i = obstacles.length - 1; i >= 0; i--) {
         let obs = obstacles[i];
         obs.x -= obs.speed;
@@ -520,7 +598,6 @@
         if (obs.x < -60) obstacles.splice(i, 1);
       }
 
-      // Collectibles
       for (let j = items.length - 1; j >= 0; j--) {
         let item = items[j];
         item.x -= 3;
@@ -576,7 +653,6 @@
     function render() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      // Stars
       ctx.fillStyle = "rgba(255, 255, 255, 0.35)";
       ctx.fillRect(80, 100, 2, 2);
       ctx.fillRect(260, 180, 3, 3);
