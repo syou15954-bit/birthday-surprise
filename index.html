@@ -386,6 +386,7 @@
     let items = [];
     let frameCount = 0;
 
+    // Web Audio Sound FX for actions
     const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
     function playBeep(freq, dur, type = 'sine') {
       if (audioCtx.state === 'suspended') audioCtx.resume();
@@ -401,8 +402,9 @@
       osc.stop(audioCtx.currentTime + dur);
     }
 
+    // Start background music ONLY during active gameplay
     function startMusic() {
-      if (!musicStarted && bgMusic) {
+      if (!musicStarted && bgMusic && !isGameWon && !isGameOver) {
         bgMusic.play().then(() => {
           musicStarted = true;
           if (musicBtn) musicBtn.innerText = "🔊";
@@ -413,6 +415,15 @@
     }
     window.addEventListener('touchstart', startMusic, { once: true });
     window.addEventListener('click', startMusic, { once: true });
+
+    function stopGameMusic() {
+      if (bgMusic) {
+        bgMusic.pause();
+        bgMusic.currentTime = 0;
+      }
+      if (musicBtn) musicBtn.innerText = "🔇";
+      musicStarted = false;
+    }
 
     function flap() {
       if (isGameOver || isGameWon) return;
@@ -437,29 +448,31 @@
       if (bgMusic.paused) {
         bgMusic.play();
         musicBtn.innerText = "🔊";
+        musicStarted = true;
       } else {
         bgMusic.pause();
         musicBtn.innerText = "🔇";
+        musicStarted = false;
       }
     }
 
-    // Voice Note Logic (Auto Ducking Background Music)
+    // Voice Note Logic (Independent and clean)
     function toggleVoiceNote() {
       if (!voiceNote) return;
+
+      // Always ensure game music is stopped
+      stopGameMusic();
+
       if (voiceNote.paused) {
-        if (bgMusic && !bgMusic.paused) {
-          bgMusic.pause();
-          musicBtn.innerText = "🔇";
-        }
-        voiceNote.play();
-        voicePlayBtn.innerText = "⏸️ PAUSE";
+        voiceNote.play().then(() => {
+          voicePlayBtn.innerText = "⏸️ PAUSE";
+        }).catch(err => {
+          console.log("Voice note play error:", err);
+          voiceStatus.innerText = "Error loading";
+        });
       } else {
         voiceNote.pause();
         voicePlayBtn.innerText = "▶️ PLAY";
-        if (bgMusic && musicStarted) {
-          bgMusic.play();
-          musicBtn.innerText = "🔊";
-        }
       }
     }
 
@@ -472,10 +485,6 @@
 
       voiceNote.addEventListener('ended', () => {
         voicePlayBtn.innerText = "▶️ REPLAY";
-        if (bgMusic && musicStarted) {
-          bgMusic.play();
-          musicBtn.innerText = "🔊";
-        }
       });
     }
 
@@ -567,7 +576,9 @@
         distText.innerText = Math.floor(distance) + " KM";
         updateWaypoints(distance);
       } else {
+        // Safe arrival: Stop music instantly & trigger celebration
         isGameWon = true;
+        stopGameMusic();
         confetti({ particleCount: 120, spread: 80, origin: { y: 0.6 } });
         goToStage('arrival');
         return;
@@ -631,6 +642,7 @@
 
     function triggerGameOver() {
       isGameOver = true;
+      stopGameMusic();
       document.getElementById('stage-gameover').style.display = 'flex';
     }
 
@@ -646,7 +658,17 @@
       items = [];
       invulnerableTimer = 0;
       isGameOver = false;
+      isGameWon = false;
       updateHeartsDisplay();
+      
+      // Restart game music cleanly
+      if (bgMusic) {
+        bgMusic.currentTime = 0;
+        bgMusic.play().then(() => {
+          musicStarted = true;
+          if (musicBtn) musicBtn.innerText = "🔊";
+        }).catch(e => console.log(e));
+      }
       loop();
     }
 
@@ -676,6 +698,9 @@
     loop();
 
     function goToStage(stageName) {
+      // In all non-game stages, ensure bgMusic stays paused
+      stopGameMusic();
+
       document.querySelectorAll('.screen-overlay').forEach(el => el.style.display = 'none');
       if (stageName === 'arrival') document.getElementById('stage-arrival').style.display = 'flex';
       if (stageName === 'cake') document.getElementById('stage-cake').style.display = 'flex';
