@@ -100,11 +100,12 @@
       display: none;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
-      padding: 20px;
+      justify-content: flex-start;
+      padding: 16px 14px 20px;
       text-align: center;
       z-index: 50;
       animation: fadeIn 0.5s ease;
+      overflow-y: auto;
     }
 
     .btn-action {
@@ -116,33 +117,80 @@
       padding: 12px 18px;
       border-radius: 8px;
       cursor: pointer;
-      margin-top: 14px;
+      margin-top: 12px;
       box-shadow: 0 4px 15px rgba(244, 63, 94, 0.4);
+      flex-shrink: 0;
     }
     .btn-action:active { transform: scale(0.96); }
+
+    /* Airport Arrival Scene Styling */
+    .airport-wrapper {
+      width: 100%;
+      max-width: 380px;
+      background: linear-gradient(180deg, #090d16 0%, #0f172a 65%, #1e293b 100%);
+      border: 1.5px solid rgba(56, 189, 248, 0.4);
+      border-radius: 12px;
+      padding: 8px;
+      margin-bottom: 10px;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.7);
+      flex-shrink: 0;
+    }
+    .airport-svg {
+      width: 100%;
+      height: 160px;
+      display: block;
+    }
+
+    /* Animations for Waiting Girl & Lights */
+    @keyframes girlBounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-7px); }
+    }
+    @keyframes girlWave {
+      0%, 100% { transform: rotate(0deg); }
+      50% { transform: rotate(26deg); }
+    }
+    @keyframes floatHeart {
+      0% { opacity: 0; transform: translateY(0) scale(0.7); }
+      50% { opacity: 1; }
+      100% { opacity: 0; transform: translateY(-16px) scale(1.1); }
+    }
+    @keyframes beaconBlink {
+      0%, 100% { opacity: 0.3; }
+      50% { opacity: 1; }
+    }
+
+    .anim-girl-bounce { animation: girlBounce 1.2s infinite ease-in-out; }
+    .anim-girl-wave { transform-origin: 298px 105px; animation: girlWave 0.7s infinite alternate ease-in-out; }
+    .anim-heart-1 { animation: floatHeart 1.8s infinite ease-out; }
+    .anim-heart-2 { animation: floatHeart 2.2s 0.8s infinite ease-out; }
+    .anim-beacon { animation: beaconBlink 0.9s infinite alternate; }
 
     /* Boarding Pass */
     .boarding-pass {
       background: #fff;
       color: #1e293b;
       border-radius: 12px;
-      padding: 18px;
+      padding: 14px 16px;
       width: 100%;
+      max-width: 380px;
       text-align: left;
       font-family: sans-serif;
       border-left: 6px solid #f43f5e;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+      flex-shrink: 0;
     }
     .pass-header { font-size: 10px; font-weight: bold; color: #f43f5e; letter-spacing: 1px; }
-    .pass-route { display: flex; justify-content: space-between; align-items: center; margin: 12px 0; font-size: 18px; font-weight: 800; }
+    .pass-route { display: flex; justify-content: space-between; align-items: center; margin: 10px 0; font-size: 17px; font-weight: 800; }
     .stamp {
       display: inline-block;
-      padding: 5px 10px;
+      padding: 4px 8px;
       border: 2px dashed #10b981;
       color: #10b981;
       font-family: 'Press Start 2P', monospace;
-      font-size: 8px;
-      transform: rotate(-4deg);
-      margin-top: 10px;
+      font-size: 7.5px;
+      transform: rotate(-3deg);
+      margin-top: 8px;
     }
 
     /* Cake & Candle */
@@ -277,7 +325,7 @@
     <div id="tapGuide">👆 မင်းဆီအရောက် ပျံသန်းနိုင်အောင် နှိပ်ပေးပါ ✈️</div>
 
     <!-- GAME OVER SCREEN -->
-    <div id="stage-gameover" class="screen-overlay">
+    <div id="stage-gameover" class="screen-overlay" style="justify-content: center;">
       <div style="font-size: 32px; margin-bottom: 12px;">⛈️⚡</div>
       <h3 style="font-size: 11px; color: #f43f5e; margin-bottom: 12px;">MAYDAY! TURBULENCE!</h3>
       <p style="font-family: 'Padauk'; font-size: 13px; color: #cbd5e1; line-height: 1.6; margin-bottom: 10px;">
@@ -286,10 +334,143 @@
       <button class="btn-action" onclick="restartFlight()">TRY AGAIN 🔄</button>
     </div>
 
-    <!-- STAGE 2: Boarding Pass with Fireworks Celebrations -->
+    <!-- STAGE 2: Airport Runway Arrival & Waiting Girl Avatar Scene -->
     <div id="stage-arrival" class="screen-overlay">
-      <div style="font-size: 28px; margin-bottom: 10px;">🎆🛬🇸🇬🎆</div>
-      <h3 style="font-size: 11px; color: #38bdf8; margin-bottom: 12px;">SAFELY ARRIVED IN SINGAPORE!</h3>
+      <h3 style="font-size: 10px; color: #38bdf8; margin-bottom: 8px; letter-spacing: 0.5px;">🛬 SAFELY TOUCHED DOWN!</h3>
+
+      <!-- SVG Changi Airport & Waiting Cute Girl Avatar -->
+      <div class="airport-wrapper">
+        <svg class="airport-svg" viewBox="0 0 360 160">
+          <!-- Sky Gradient and Stars -->
+          <circle cx="40" cy="20" r="1" fill="#fff" opacity="0.6"/>
+          <circle cx="120" cy="35" r="1.5" fill="#facc15" opacity="0.8"/>
+          <circle cx="210" cy="15" r="1" fill="#fff" opacity="0.5"/>
+          <circle cx="330" cy="25" r="1.5" fill="#fff" opacity="0.7"/>
+
+          <!-- Changi Airport Control Tower Silhouette -->
+          <path d="M 60 75 L 68 35 L 64 35 L 64 26 L 76 26 L 76 35 L 72 35 L 80 75 Z" fill="#1e293b"/>
+          <rect x="63" y="24" width="14" height="3" fill="#38bdf8" opacity="0.9"/>
+          <!-- Tower Beacon Light -->
+          <circle cx="70" cy="21" r="3" fill="#f43f5e" class="anim-beacon"/>
+
+          <!-- Terminal Building Backdrop -->
+          <rect x="95" y="55" width="230" height="22" rx="3" fill="#0f172a" stroke="#334155" stroke-width="1"/>
+          <text x="105" y="68" font-family="'Press Start 2P', monospace" font-size="6.5" fill="#38bdf8" letter-spacing="1">CHANGI AIRPORT SINGAPORE 🇸🇬</text>
+          
+          <!-- Terminal Windows Glowing -->
+          <rect x="100" y="71" width="8" height="4" fill="#facc15" opacity="0.7"/>
+          <rect x="114" y="71" width="8" height="4" fill="#facc15" opacity="0.7"/>
+          <rect x="128" y="71" width="8" height="4" fill="#facc15" opacity="0.7"/>
+          <rect x="290" y="71" width="8" height="4" fill="#38bdf8" opacity="0.7"/>
+          <rect x="304" y="71" width="8" height="4" fill="#38bdf8" opacity="0.7"/>
+
+          <!-- Runway Tarmac Ground -->
+          <polygon points="0,82 360,82 360,160 0,160" fill="#1e293b"/>
+          <!-- Runway Edge Lights -->
+          <circle cx="20" cy="85" r="2" fill="#10b981"/>
+          <circle cx="90" cy="85" r="2" fill="#10b981"/>
+          <circle cx="160" cy="85" r="2" fill="#10b981"/>
+          <circle cx="230" cy="85" r="2" fill="#10b981"/>
+          <circle cx="340" cy="85" r="2" fill="#10b981"/>
+          
+          <!-- Runway Center Markings -->
+          <line x1="20" y1="125" x2="60" y2="125" stroke="#facc15" stroke-dasharray="10,8" stroke-width="2"/>
+          <line x1="80" y1="125" x2="180" y2="125" stroke="#ffffff" stroke-dasharray="14,10" stroke-width="2" opacity="0.6"/>
+
+          <!-- PARKED AIRLINER ON RUNWAY (Left) -->
+          <g transform="translate(30, 95)">
+            <!-- Jet Body -->
+            <path d="M 95 12 Q 85 4 60 4 L 15 4 L 0 8 L 0 16 L 20 20 L 75 20 Q 92 20 95 12 Z" fill="#ffffff"/>
+            <path d="M 75 14 L 0 14 L 0 17 L 70 17 Z" fill="#f43f5e"/>
+            <!-- Tail -->
+            <polygon points="12,4 0,-12 10,-12 25,4" fill="#f43f5e"/>
+            <text x="3" y="-3" font-size="7">❤️</text>
+            <!-- Cockpit -->
+            <polygon points="80,6 87,9 80,10" fill="#0f172a"/>
+            <!-- Windows -->
+            <rect x="30" y="8" width="4" height="3" fill="#1e293b"/>
+            <rect x="40" y="8" width="4" height="3" fill="#1e293b"/>
+            <rect x="50" y="8" width="4" height="3" fill="#1e293b"/>
+            <rect x="60" y="8" width="4" height="3" fill="#1e293b"/>
+            <!-- Wing -->
+            <polygon points="45,14 25,28 35,28 60,14" fill="#cbd5e1"/>
+            <rect x="25" y="26" width="3" height="4" fill="#f43f5e"/>
+            <!-- Engine -->
+            <rect x="42" y="20" width="14" height="6" rx="2" fill="#475569"/>
+            <!-- Wheels -->
+            <circle cx="35" cy="25" r="3" fill="#0f172a"/>
+            <circle cx="75" cy="23" r="2.5" fill="#0f172a"/>
+          </g>
+
+          <!-- CUTE WAITING GIRLFRIEND AVATAR (Right) -->
+          <g class="anim-girl-bounce">
+            <!-- Speech Bubble -->
+            <g transform="translate(240, 48)">
+              <rect x="0" y="0" width="95" height="22" rx="6" fill="#ffffff" stroke="#f43f5e" stroke-width="1.5"/>
+              <polygon points="35,22 45,22 38,28" fill="#ffffff"/>
+              <polygon points="34,22 35,23 38,28" stroke="#f43f5e" stroke-width="1"/>
+              <text x="8" y="14" font-family="'Padauk', sans-serif" font-size="10.5" font-weight="bold" fill="#f43f5e">မင်းရောက်လာပြီ! ❤️</text>
+            </g>
+
+            <!-- Floating Hearts from Her Head -->
+            <text x="265" y="74" font-size="10" class="anim-heart-1">💖</text>
+            <text x="295" y="70" font-size="8" class="anim-heart-2">✨</text>
+
+            <!-- Girl Body Group -->
+            <g transform="translate(270, 78)">
+              <!-- Hair Back -->
+              <path d="M 6 12 C 0 25, -2 40, 8 48 C 12 40, 16 35, 16 25 Z" fill="#262626"/>
+              <path d="M 26 12 C 32 25, 34 40, 24 48 C 20 40, 16 35, 16 25 Z" fill="#262626"/>
+              
+              <!-- Legs & Cute Shoes -->
+              <rect x="11" y="46" width="3.5" height="15" fill="#ffe4e6"/>
+              <rect x="17" y="46" width="3.5" height="15" fill="#ffe4e6"/>
+              <ellipse cx="12" cy="61" rx="3.5" ry="2" fill="#be185d"/>
+              <ellipse cx="19" cy="61" rx="3.5" ry="2" fill="#be185d"/>
+
+              <!-- Pink Dress -->
+              <path d="M 10 28 L 6 46 L 26 46 L 22 28 Z" fill="#f43f5e"/>
+              <!-- Dress Collar Ribbon -->
+              <polygon points="13,28 16,31 19,28" fill="#ffffff"/>
+              <circle cx="16" cy="30" r="1.5" fill="#facc15"/>
+
+              <!-- Head -->
+              <circle cx="16" cy="18" r="10.5" fill="#ffe4e6"/>
+
+              <!-- Anime Big Sparkly Eyes -->
+              <ellipse cx="12.5" cy="18" rx="2" ry="2.6" fill="#0f172a"/>
+              <circle cx="12" cy="17" r="0.8" fill="#ffffff"/>
+              <ellipse cx="19.5" cy="18" rx="2" ry="2.6" fill="#0f172a"/>
+              <circle cx="19" cy="17" r="0.8" fill="#ffffff"/>
+
+              <!-- Cute Blushing Cheeks -->
+              <ellipse cx="10" cy="22" rx="2.2" ry="1.2" fill="#fb7185" opacity="0.8"/>
+              <ellipse cx="22" cy="22" rx="2.2" ry="1.2" fill="#fb7185" opacity="0.8"/>
+
+              <!-- Happy Smile -->
+              <path d="M 14 22 Q 16 25 18 22" stroke="#e11d48" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+
+              <!-- Front Bangs & Cute Ribbon Clip -->
+              <path d="M 6 15 Q 16 8 26 15 Q 22 10 16 10 Q 10 10 6 15 Z" fill="#262626"/>
+              <rect x="7" y="10" width="4" height="4" rx="1" fill="#fb7185"/>
+
+              <!-- Left Arm Holding Red Roses Bouquet -->
+              <path d="M 10 30 Q 3 34 5 39" stroke="#ffe4e6" stroke-width="3" stroke-linecap="round" fill="none"/>
+              <circle cx="4" cy="40" r="4" fill="#e11d48"/>
+              <circle cx="2" cy="38" r="2.5" fill="#f43f5e"/>
+              <circle cx="6" cy="38" r="2.5" fill="#fb7185"/>
+
+              <!-- Right Arm Waving Eagerly -->
+              <g class="anim-girl-wave">
+                <path d="M 22 30 Q 28 22 29 14" stroke="#ffe4e6" stroke-width="3" stroke-linecap="round" fill="none"/>
+                <circle cx="29" cy="13" r="2.5" fill="#ffe4e6"/>
+              </g>
+            </g>
+          </g>
+        </svg>
+      </div>
+
+      <!-- Boarding Pass -->
       <div class="boarding-pass">
         <div class="pass-header">SPECIAL DELIVERY • TO MY LOVE</div>
         <div class="pass-route">
@@ -297,16 +478,17 @@
           <span style="font-size: 14px; color: #f43f5e;">✈️</span>
           <span>SIN</span>
         </div>
-        <div style="font-size: 11px; color: #1e293b; font-weight: bold; margin-bottom: 4px;">PASSENGER: ရန်ကုန်ကနေ လာနေပါပြီဗျ ❤️</div>
-        <div style="font-size: 10px; color: #64748b; margin-bottom: 4px;">DESTINATION: စင်ကာပူက ချစ်လေးအနားကိုရောက်ပါပြီ တော်လိုက်တာချစ်သူလေးက </div>
-        <div style="font-size: 10px; color: #64748b;">MISSION: ၁,၉၂၀ KM ကျော်ဖြတ်ပြီး မွေးနေ့လက်ဆောင် လာပို့ခြင်း ✔️</div>
+        <div style="font-size: 11px; color: #1e293b; font-weight: bold; margin-bottom: 3px;">PASSENGER: ရန်ကုန်ကနေလာနေပါပြီ ❤️</div>
+        <div style="font-size: 10px; color: #64748b; margin-bottom: 3px;">DESTINATION: စင်ကာပူက ချစ်သူဆီကို ရောက်ရှိပါပြီဗျ</div>
+        <div style="font-size: 10px; color: #64748b;">MISSION: ၁,၉၂၀ KM ကျော်ဖြတ်ပြီး မွေးနေ့ဆုတောင်း လာပို့တာပါ ✔️</div>
         <div class="stamp">IMMIGRATION: CLEARED ✔️</div>
       </div>
+
       <button class="btn-action" onclick="goToStage('cake')">RECEIVE GIFT 🎁</button>
     </div>
 
     <!-- STAGE 3: Cake -->
-    <div id="stage-cake" class="screen-overlay">
+    <div id="stage-cake" class="screen-overlay" style="justify-content: center;">
       <h3 style="font-size: 11px; color: #fb7185; line-height: 1.6;">MAKE A WISH &<br>TAP TO BLOW CANDLES!</h3>
       <div class="cake-container">
         <div class="candles">
@@ -321,7 +503,7 @@
     </div>
 
     <!-- STAGE 4: Polaroid -->
-    <div id="stage-polaroid" class="screen-overlay">
+    <div id="stage-polaroid" class="screen-overlay" style="justify-content: center;">
       <h3 style="font-size: 11px; color: #38bdf8; margin-bottom: 12px;">FAVORITE MOMENT</h3>
       <div class="polaroid">
         <img src="photo.jpg" alt="Our Memory" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1518199266791-5375a83190b7?w=600';">
@@ -331,7 +513,7 @@
     </div>
 
     <!-- STAGE 5: Letter & Voice Note -->
-    <div id="stage-letter" class="screen-overlay">
+    <div id="stage-letter" class="screen-overlay" style="justify-content: center;">
       <div style="font-size: 24px; margin-bottom: 6px;">🎂💖</div>
       <h3 style="font-size: 11px; color: #fb7185; margin-bottom: 10px;">HAPPY BIRTHDAY!</h3>
       
@@ -380,6 +562,7 @@
     let hearts = 3;
     let score = 0;
     let invulnerableTimer = 0;
+    let happyTimer = 0;
     let blownCount = 0;
     let musicStarted = false;
 
@@ -494,7 +677,6 @@
         return Math.random() * (max - min) + min;
       }
 
-      // Celebratory pop sound chords
       playBeep(520, 0.2, 'triangle');
       setTimeout(() => playBeep(660, 0.25, 'triangle'), 250);
       setTimeout(() => playBeep(880, 0.35, 'sine'), 500);
@@ -506,7 +688,6 @@
         }
         const particleCount = 45 * (timeLeft / duration);
 
-        // Burst 1: Left sky fireworks
         confetti({
           ...defaults,
           particleCount,
@@ -515,7 +696,6 @@
           shapes: ['star', 'circle']
         });
 
-        // Burst 2: Right sky fireworks
         confetti({
           ...defaults,
           particleCount,
@@ -526,15 +706,17 @@
       }, 300);
     }
 
-    // REALISTIC PASSENGER JET VECTOR DRAWING
+    // REALISTIC PASSENGER JET WITH EMOTIONAL FACE STICKER
     function drawRealisticAirliner(x, y) {
-      if (invulnerableTimer > 0 && Math.floor(invulnerableTimer / 5) % 2 === 0) return;
-
       ctx.save();
       ctx.translate(x + 20, y + 10);
 
       let pitchAngle = Math.min(Math.max(velocity * 0.04, -0.32), 0.35);
       ctx.rotate(pitchAngle);
+
+      if (invulnerableTimer > 0) {
+        ctx.globalAlpha = (Math.floor(invulnerableTimer / 4) % 2 === 0) ? 0.7 : 1.0;
+      }
 
       // 1. Jet Contrail
       ctx.fillStyle = "rgba(186, 230, 253, 0.6)";
@@ -581,7 +763,7 @@
       ctx.closePath();
       ctx.fill();
 
-      // Airline Red Ribbon Stripe
+      // Ribbon Stripe
       ctx.fillStyle = "#f43f5e";
       ctx.beginPath();
       ctx.moveTo(15, 2);
@@ -609,18 +791,18 @@
       // 6. Cockpit Windshield
       ctx.fillStyle = "#0f172a";
       ctx.beginPath();
-      ctx.moveTo(16, -4);
-      ctx.lineTo(20, -1);
-      ctx.lineTo(15, -1);
-      ctx.lineTo(14, -4);
+      ctx.moveTo(17, -4);
+      ctx.lineTo(21, -1);
+      ctx.lineTo(16, -1);
+      ctx.lineTo(15, -4);
       ctx.closePath();
       ctx.fill();
       ctx.fillStyle = "#38bdf8";
-      ctx.fillRect(15, -3, 2, 2);
+      ctx.fillRect(16, -3, 2, 2);
 
-      // 7. Cabin Windows
+      // 7. Cabin Rear Windows
       ctx.fillStyle = "#1e293b";
-      for (let w = -12; w <= 8; w += 4) {
+      for (let w = -18; w <= 0; w += 4) {
         ctx.fillRect(w, -2, 2, 2);
       }
 
@@ -647,6 +829,92 @@
       ctx.fillRect(7, 7, 2, 3);
       ctx.fillStyle = "#38bdf8";
       ctx.fillRect(-3, 7, 2, 2);
+
+      // 10. EMOTIONAL FACE STICKER
+      if (invulnerableTimer > 0) {
+        ctx.strokeStyle = "#1e293b";
+        ctx.lineWidth = 1.4;
+        ctx.lineCap = "round";
+
+        ctx.beginPath();
+        ctx.moveTo(7, -2); ctx.lineTo(10, 0); ctx.lineTo(7, 2);
+        ctx.stroke();
+
+        ctx.beginPath();
+        ctx.moveTo(16, -2); ctx.lineTo(13, 0); ctx.lineTo(16, 2);
+        ctx.stroke();
+
+        ctx.beginPath();
+        ctx.arc(11.5, 4.2, 2.5, Math.PI * 1.15, Math.PI * 1.85);
+        ctx.stroke();
+
+        ctx.fillStyle = "#38bdf8";
+        ctx.beginPath(); ctx.arc(4, 0, 1.8, 0, Math.PI * 2); ctx.fill();
+        ctx.fillRect(0, -0.5, 4, 1.2);
+
+        ctx.beginPath(); ctx.arc(2, 3, 1.5, 0, Math.PI * 2); ctx.fill();
+        ctx.fillRect(-3, 2.5, 5, 1);
+
+        ctx.fillStyle = "#fed7aa";
+        ctx.fillRect(10, -5, 5, 2.5);
+        ctx.fillStyle = "#ea580c";
+        ctx.fillRect(12, -5, 1, 2.5);
+
+      } else if (happyTimer > 0) {
+        ctx.fillStyle = "rgba(244, 63, 94, 0.65)";
+        ctx.beginPath(); ctx.arc(6, 2, 2.2, 0, Math.PI*2); ctx.fill();
+        ctx.beginPath(); ctx.arc(17, 2, 2.2, 0, Math.PI*2); ctx.fill();
+
+        ctx.font = "7px sans-serif";
+        ctx.fillStyle = "#f43f5e";
+        ctx.fillText("❤️", 5, 1);
+        ctx.fillText("❤️", 13, 1);
+
+        ctx.strokeStyle = "#1e293b";
+        ctx.lineWidth = 1.3;
+        ctx.beginPath();
+        ctx.arc(11.5, 1.5, 2.5, 0.1, Math.PI - 0.1);
+        ctx.stroke();
+
+      } else {
+        ctx.fillStyle = "rgba(251, 113, 133, 0.55)";
+        ctx.beginPath(); ctx.arc(6, 2, 2, 0, Math.PI*2); ctx.fill();
+        ctx.beginPath(); ctx.arc(17, 2, 2, 0, Math.PI*2); ctx.fill();
+
+        if (velocity < -1) {
+          ctx.strokeStyle = "#1e293b";
+          ctx.lineWidth = 1.3;
+          ctx.beginPath(); ctx.arc(8, 0, 1.8, Math.PI * 1.15, Math.PI * 1.85); ctx.stroke();
+          ctx.beginPath(); ctx.arc(15, 0, 1.8, Math.PI * 1.15, Math.PI * 1.85); ctx.stroke();
+
+          ctx.fillStyle = "#f43f5e";
+          ctx.beginPath(); ctx.arc(11.5, 1.5, 2, 0, Math.PI); ctx.fill();
+        } else {
+          let isBlinking = (frameCount % 150 > 142);
+          if (isBlinking) {
+            ctx.strokeStyle = "#1e293b";
+            ctx.lineWidth = 1.2;
+            ctx.beginPath(); ctx.moveTo(6.5, 0); ctx.lineTo(10, 0); ctx.stroke();
+            ctx.beginPath(); ctx.moveTo(13.5, 0); ctx.lineTo(17, 0); ctx.stroke();
+          } else {
+            ctx.fillStyle = "#0f172a";
+            ctx.beginPath(); ctx.arc(8, -0.5, 1.8, 0, Math.PI*2); ctx.fill();
+            ctx.fillStyle = "#ffffff";
+            ctx.beginPath(); ctx.arc(7.4, -1.1, 0.7, 0, Math.PI*2); ctx.fill();
+
+            ctx.fillStyle = "#0f172a";
+            ctx.beginPath(); ctx.arc(15, -0.5, 1.8, 0, Math.PI*2); ctx.fill();
+            ctx.fillStyle = "#ffffff";
+            ctx.beginPath(); ctx.arc(14.4, -1.1, 0.7, 0, Math.PI*2); ctx.fill();
+          }
+
+          ctx.strokeStyle = "#1e293b";
+          ctx.lineWidth = 1.2;
+          ctx.beginPath();
+          ctx.arc(11.5, 1.5, 2, 0.2, Math.PI - 0.2);
+          ctx.stroke();
+        }
+      }
 
       ctx.restore();
     }
@@ -721,6 +989,7 @@
       if (planeY < 25) planeY = 25;
 
       if (invulnerableTimer > 0) invulnerableTimer--;
+      if (happyTimer > 0) happyTimer--;
 
       if (distance > 0) {
         distance -= 0.75;
@@ -728,7 +997,6 @@
         distText.innerText = Math.floor(distance) + " KM";
         updateWaypoints(distance);
       } else {
-        // Safe arrival: trigger fireworks show
         isGameWon = true;
         stopGameMusic();
         launchArrivalFireworks();
@@ -749,7 +1017,7 @@
             obs.y + obs.h > planeY - 4) {
           
           hearts--;
-          invulnerableTimer = 60;
+          invulnerableTimer = 65;
           playBeep(160, 0.25, 'sawtooth');
           updateHeartsDisplay();
 
@@ -770,6 +1038,8 @@
             item.y < planeY + 20 &&
             item.y + item.h > planeY - 4) {
           
+          happyTimer = 40;
+
           if (item.type === 'heart') {
             if (hearts < 3) hearts++;
             updateHeartsDisplay();
@@ -809,6 +1079,7 @@
       obstacles = [];
       items = [];
       invulnerableTimer = 0;
+      happyTimer = 0;
       isGameOver = false;
       isGameWon = false;
       updateHeartsDisplay();
