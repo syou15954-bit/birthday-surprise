@@ -270,18 +270,18 @@
         </div>
         <span id="distText" style="color: #38bdf8;">1,920 KM</span>
       </div>
-      <div id="waypointBanner">🇲🇲 DEPARTING YANGON AIRSPACE</div>
+      <div id="waypointBanner">🇲🇲 DEPARTING YANGON TO MEET YOU</div>
     </div>
 
     <canvas id="gameCanvas" width="400" height="600"></canvas>
-    <div id="tapGuide">👆 TAP TO DODGE STORMS & BIRDS</div>
+    <div id="tapGuide">👆 မင်းဆီအရောက် ပျံသန်းနိုင်အောင် နှိပ်ပေးပါ ✈️</div>
 
     <!-- GAME OVER SCREEN -->
     <div id="stage-gameover" class="screen-overlay">
       <div style="font-size: 32px; margin-bottom: 12px;">⛈️⚡</div>
       <h3 style="font-size: 11px; color: #f43f5e; margin-bottom: 12px;">MAYDAY! TURBULENCE!</h3>
       <p style="font-family: 'Padauk'; font-size: 13px; color: #cbd5e1; line-height: 1.6; margin-bottom: 10px;">
-        လေပြင်းမုန်တိုင်း မိသွားတယ် ချစ်လေးရေ... ❤️<br>စိတ်မညစ်နဲ့နော်၊ စင်ကာပူရောက်အောင် ပြန်ကြိုးစားကြမယ်!
+        မိုးကြိုးလေပြင်းတွေ မိလို့ မင်းဆီကို အချိန်မီ မရောက်နိုင်သေးဘူး ချစ်လေးရေ... ❤️<br>စင်ကာပူအရောက် မရရအောင် ပြန်ပျံသန်းလာခဲ့မယ်နော်!
       </p>
       <button class="btn-action" onclick="restartFlight()">TRY AGAIN 🔄</button>
     </div>
@@ -289,16 +289,17 @@
     <!-- STAGE 2: Boarding Pass -->
     <div id="stage-arrival" class="screen-overlay">
       <div style="font-size: 28px; margin-bottom: 10px;">🛬🇸🇬</div>
-      <h3 style="font-size: 11px; color: #38bdf8; margin-bottom: 12px;">SAFELY ARRIVED!</h3>
+      <h3 style="font-size: 11px; color: #38bdf8; margin-bottom: 12px;">SAFELY ARRIVED IN SINGAPORE!</h3>
       <div class="boarding-pass">
-        <div class="pass-header">OFFICIAL BOARDING PASS</div>
+        <div class="pass-header">SPECIAL DELIVERY • TO MY LOVE</div>
         <div class="pass-route">
           <span>YGN</span>
           <span style="font-size: 14px; color: #f43f5e;">✈️</span>
           <span>SIN</span>
         </div>
-        <div style="font-size: 11px; color: #64748b; margin-bottom: 4px;">PASSENGER: ချစ်ရသူလေး</div>
-        <div style="font-size: 11px; color: #64748b;">FLIGHT: ၁,၉၂၀ KM အောင်မြင်စွာ ပျံသန်းပြီးစီး ✔️</div>
+        <div style="font-size: 11px; color: #1e293b; font-weight: bold; margin-bottom: 4px;">PASSENGER: ရန်ကုန်က ကိုယ် ❤️</div>
+        <div style="font-size: 10px; color: #64748b; margin-bottom: 4px;">DESTINATION: စင်ကာပူက ချစ်လေးအနားကို</div>
+        <div style="font-size: 10px; color: #64748b;">MISSION: ၁,၉၂၀ KM ကျော်ဖြတ်ပြီး မွေးနေ့လက်ဆောင် လာပို့ခြင်း ✔️</div>
         <div class="stamp">IMMIGRATION: CLEARED ✔️</div>
       </div>
       <button class="btn-action" onclick="goToStage('cake')">RECEIVE GIFT 🎁</button>
@@ -336,7 +337,7 @@
       
       <div class="letter-text">
         ချစ်ရတဲ့သူလေးရေ... ❤️<br><br>
-        မွေးနေ့မှာ စိတ်၏ချမ်းသာခြင်း၊ ကိုယ်၏ကျန်းမာခြင်းနဲ့ ပြည့်စုံပါစေ။ စင်ကာပူမှာ တစ်ယောက်တည်း အဝေးရောက်နေပေမဲ့ ချစ်အနားမှာ ကိုယ်အမြဲရှိနေတယ်ဆိုတာ မမေ့ပါနဲ့။ ပင်ပန်းတဲ့နေ့တွေမှာ ဒီစာလွှာလေးကိုဖတ်ပြီး အားယူနော်။<br><br>
+        မွေးနေ့မှာ စိတ်၏ချမ်းသာခြင်း၊ ကိုယ်၏ကျန်းမာခြင်းနဲ့ ပြည့်စုံပါစေ။ စင်ကာပူမှာ တစ်ယောက်တည်း အဝေးရောက်ပြီး အလုပ်တွေပင်ပန်းနေပေမဲ့ ချစ်အနားမှာ ကိုယ်အမြဲရှိနေတယ်ဆိုတာ မမေ့ပါနဲ့။ ပင်ပန်းတဲ့နေ့တွေမှာ ဒီစာလွှာလေးကိုဖတ်ပြီး အားယူနော်။<br><br>
         ချစ်လိုချင်တဲ့ အိပ်မက်တွေအားလုံး အမြန်ဆုံး အကောင်အထည်ဖော်နိုင်ပါစေ။ Happy Birthday My Love! ✨
       </div>
 
@@ -386,7 +387,6 @@
     let items = [];
     let frameCount = 0;
 
-    // Web Audio Sound FX for actions
     const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
     function playBeep(freq, dur, type = 'sine') {
       if (audioCtx.state === 'suspended') audioCtx.resume();
@@ -402,7 +402,6 @@
       osc.stop(audioCtx.currentTime + dur);
     }
 
-    // Start background music ONLY during active gameplay
     function startMusic() {
       if (!musicStarted && bgMusic && !isGameWon && !isGameOver) {
         bgMusic.play().then(() => {
@@ -456,11 +455,8 @@
       }
     }
 
-    // Voice Note Logic (Independent and clean)
     function toggleVoiceNote() {
       if (!voiceNote) return;
-
-      // Always ensure game music is stopped
       stopGameMusic();
 
       if (voiceNote.paused) {
@@ -524,13 +520,13 @@
 
     function updateWaypoints(d) {
       if (d > 1400) {
-        waypointBanner.innerText = "🇲🇲 DEPARTING YANGON AIRSPACE";
+        waypointBanner.innerText = "🇲🇲 DEPARTING YANGON TO MEET YOU";
       } else if (d > 800) {
         waypointBanner.innerText = "🇹🇭 FLYING OVER BANGKOK SKY";
       } else if (d > 300) {
         waypointBanner.innerText = "🇲🇾 OVER MALAYSIA AIRSPACE";
       } else {
-        waypointBanner.innerText = "🇸🇬 ENTERING SINGAPORE SKY";
+        waypointBanner.innerText = "🇸🇬 ENTERING SINGAPORE SKY TO YOU";
       }
     }
 
@@ -576,7 +572,6 @@
         distText.innerText = Math.floor(distance) + " KM";
         updateWaypoints(distance);
       } else {
-        // Safe arrival: Stop music instantly & trigger celebration
         isGameWon = true;
         stopGameMusic();
         confetti({ particleCount: 120, spread: 80, origin: { y: 0.6 } });
@@ -661,7 +656,6 @@
       isGameWon = false;
       updateHeartsDisplay();
       
-      // Restart game music cleanly
       if (bgMusic) {
         bgMusic.currentTime = 0;
         bgMusic.play().then(() => {
@@ -698,9 +692,7 @@
     loop();
 
     function goToStage(stageName) {
-      // In all non-game stages, ensure bgMusic stays paused
       stopGameMusic();
-
       document.querySelectorAll('.screen-overlay').forEach(el => el.style.display = 'none');
       if (stageName === 'arrival') document.getElementById('stage-arrival').style.display = 'flex';
       if (stageName === 'cake') document.getElementById('stage-cake').style.display = 'flex';
