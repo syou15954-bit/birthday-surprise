@@ -340,8 +340,12 @@
       <div class="airport-wrapper">
         <svg class="airport-svg" viewBox="0 0 360 160">
           <defs>
+            <!-- Enlarged Face Clips for both Boy & Girl -->
+            <clipPath id="boyPlaneFaceClip">
+              <circle cx="0" cy="0" r="14"/>
+            </clipPath>
             <clipPath id="girlFaceClip">
-              <circle cx="16" cy="18" r="10.5"/>
+              <circle cx="16" cy="18" r="14"/>
             </clipPath>
           </defs>
 
@@ -377,85 +381,82 @@
           <line x1="20" y1="125" x2="60" y2="125" stroke="#facc15" stroke-dasharray="10,8" stroke-width="2"/>
           <line x1="80" y1="125" x2="180" y2="125" stroke="#ffffff" stroke-dasharray="14,10" stroke-width="2" opacity="0.6"/>
 
-          <!-- Parked Airliner -->
-          <g transform="translate(30, 95)">
-            <path d="M 95 12 Q 85 4 60 4 L 15 4 L 0 8 L 0 16 L 20 20 L 75 20 Q 92 20 95 12 Z" fill="#ffffff"/>
-            <path d="M 75 14 L 0 14 L 0 17 L 70 17 Z" fill="#f43f5e"/>
-            <polygon points="12,4 0,-12 10,-12 25,4" fill="#f43f5e"/>
-            <text x="3" y="-3" font-size="7">❤️</text>
-            <polygon points="80,6 87,9 80,10" fill="#0f172a"/>
-            <rect x="30" y="8" width="4" height="3" fill="#1e293b"/>
-            <rect x="40" y="8" width="4" height="3" fill="#1e293b"/>
-            <rect x="50" y="8" width="4" height="3" fill="#1e293b"/>
-            <rect x="60" y="8" width="4" height="3" fill="#1e293b"/>
-            <polygon points="45,14 25,28 35,28 60,14" fill="#cbd5e1"/>
-            <rect x="25" y="26" width="3" height="4" fill="#f43f5e"/>
-            <rect x="42" y="20" width="14" height="6" rx="2" fill="#475569"/>
-            <circle cx="35" cy="25" r="3" fill="#0f172a"/>
-            <circle cx="75" cy="23" r="2.5" fill="#0f172a"/>
+          <!-- PARKED AIRLINER ON RUNWAY (WITH BOY'S PHOTO BADGE) -->
+          <g transform="translate(25, 92)">
+            <path d="M 105 12 Q 95 3 65 3 L 15 3 L 0 7 L 0 17 L 20 21 L 85 21 Q 102 21 105 12 Z" fill="#ffffff"/>
+            <path d="M 85 14 L 0 14 L 0 18 L 80 18 Z" fill="#f43f5e"/>
+            <polygon points="12,3 0,-14 11,-14 26,3" fill="#f43f5e"/>
+            <text x="3" y="-4" font-size="7">❤️</text>
+            <polygon points="90,6 98,9 90,11" fill="#0f172a"/>
+            <rect x="25" y="7" width="4" height="3" fill="#1e293b"/>
+            <rect x="33" y="7" width="4" height="3" fill="#1e293b"/>
+            <rect x="75" y="7" width="4" height="3" fill="#1e293b"/>
+            <rect x="83" y="7" width="4" height="3" fill="#1e293b"/>
+            <polygon points="50,14 28,30 39,30 68,14" fill="#cbd5e1"/>
+            <rect x="28" y="28" width="3.5" height="4" fill="#f43f5e"/>
+            <rect x="46" y="21" width="15" height="7" rx="2" fill="#475569"/>
+            <circle cx="38" cy="27" r="3" fill="#0f172a"/>
+            <circle cx="85" cy="24" r="2.5" fill="#0f172a"/>
+
+            <!-- BOY'S ENLARGED PHOTO STICKER ON PARKED AIRPLANE -->
+            <g transform="translate(54, 9)">
+              <circle cx="0" cy="0" r="16" fill="#f43f5e"/>
+              <circle cx="0" cy="0" r="14.5" fill="#ffffff"/>
+              <image href="my-face.jpg" x="-14" y="-14" width="28" height="28" clip-path="url(#boyPlaneFaceClip)" onerror="this.src='my-face.png';"/>
+              <circle cx="0" cy="0" r="14" fill="none" stroke="#f43f5e" stroke-width="2"/>
+              <!-- SQ-1996 Tag -->
+              <rect x="-24" y="15" width="48" height="11" rx="3.5" fill="#ffffff" stroke="#f43f5e" stroke-width="1"/>
+              <text x="-21" y="23" font-family="'Press Start 2P', monospace" font-size="5" fill="#f43f5e">SQ-1996 ❤️</text>
+            </g>
           </g>
 
-          <!-- Cute Waiting Girl Avatar -->
+          <!-- CUTE WAITING GIRL AVATAR (ENLARGED FACE) -->
           <g class="anim-girl-bounce">
-            <g transform="translate(240, 48)">
-              <rect x="0" y="0" width="95" height="22" rx="6" fill="#ffffff" stroke="#f43f5e" stroke-width="1.5"/>
-              <polygon points="35,22 45,22 38,28" fill="#ffffff"/>
-              <polygon points="34,22 35,23 38,28" stroke="#f43f5e" stroke-width="1"/>
-              <text x="8" y="14" font-family="'Padauk', sans-serif" font-size="10.5" font-weight="bold" fill="#f43f5e">မင်းရောက်လာပြီ! ❤️</text>
+            <g transform="translate(236, 44)">
+              <rect x="0" y="0" width="105" height="23" rx="6" fill="#ffffff" stroke="#f43f5e" stroke-width="1.5"/>
+              <polygon points="35,23 45,23 38,29" fill="#ffffff"/>
+              <polygon points="34,23 35,24 38,29" stroke="#f43f5e" stroke-width="1"/>
+              <text x="8" y="15" font-family="'Padauk', sans-serif" font-size="10.5" font-weight="bold" fill="#f43f5e">မင်းရောက်လာပြီ! ❤️</text>
             </g>
 
-            <text x="265" y="74" font-size="10" class="anim-heart-1">💖</text>
-            <text x="295" y="70" font-size="8" class="anim-heart-2">✨</text>
+            <text x="265" y="72" font-size="10" class="anim-heart-1">💖</text>
+            <text x="298" y="68" font-size="8" class="anim-heart-2">✨</text>
 
             <g transform="translate(270, 78)">
-              <path d="M 6 12 C 0 25, -2 40, 8 48 C 12 40, 16 35, 16 25 Z" fill="#262626"/>
-              <path d="M 26 12 C 32 25, 34 40, 24 48 C 20 40, 16 35, 16 25 Z" fill="#262626"/>
+              <path d="M 4 10 C -3 25, -4 40, 6 48 C 11 40, 16 35, 16 25 Z" fill="#262626"/>
+              <path d="M 28 10 C 35 25, 36 40, 26 48 C 21 40, 16 35, 16 25 Z" fill="#262626"/>
               
               <rect x="11" y="46" width="3.5" height="15" fill="#ffe4e6"/>
               <rect x="17" y="46" width="3.5" height="15" fill="#ffe4e6"/>
               <ellipse cx="12" cy="61" rx="3.5" ry="2" fill="#be185d"/>
               <ellipse cx="19" cy="61" rx="3.5" ry="2" fill="#be185d"/>
 
-              <path d="M 10 28 L 6 46 L 26 46 L 22 28 Z" fill="#f43f5e"/>
+              <path d="M 9 28 L 5 46 L 27 46 L 23 28 Z" fill="#f43f5e"/>
               <polygon points="13,28 16,31 19,28" fill="#ffffff"/>
               <circle cx="16" cy="30" r="1.5" fill="#facc15"/>
 
-              <!-- Default Chibi Face -->
-              <circle cx="16" cy="18" r="10.5" fill="#ffe4e6"/>
-              <ellipse cx="12.5" cy="18" rx="2" ry="2.6" fill="#0f172a"/>
-              <circle cx="12" cy="17" r="0.8" fill="#ffffff"/>
-              <ellipse cx="19.5" cy="18" rx="2" ry="2.6" fill="#0f172a"/>
-              <circle cx="19" cy="17" r="0.8" fill="#ffffff"/>
+              <!-- ENLARGED GIRLFRIEND FACE OVERLAY -->
+              <circle cx="16" cy="18" r="14.5" fill="#ffe4e6"/>
+              <image href="her-face.jpg" x="2" y="4" width="28" height="28" clip-path="url(#girlFaceClip)" onerror="this.src='her-face.png';"/>
+              <circle cx="16" cy="18" r="14" fill="none" stroke="#f43f5e" stroke-width="2"/>
+              <ellipse cx="9" cy="22" rx="3" ry="1.8" fill="rgba(244,63,94,0.55)"/>
+              <ellipse cx="23" cy="22" rx="3" ry="1.8" fill="rgba(244,63,94,0.55)"/>
 
-              <ellipse cx="10" cy="22" rx="2.2" ry="1.2" fill="#fb7185" opacity="0.8"/>
-              <ellipse cx="22" cy="22" rx="2.2" ry="1.2" fill="#fb7185" opacity="0.8"/>
-              <path d="M 14 22 Q 16 25 18 22" stroke="#e11d48" stroke-width="1.2" fill="none" stroke-linecap="round"/>
-
-              <path d="M 6 15 Q 16 8 26 15 Q 22 10 16 10 Q 10 10 6 15 Z" fill="#262626"/>
-              <rect x="7" y="10" width="4" height="4" rx="1" fill="#fb7185"/>
-
-              <!-- Her Face Photo Overlay -->
-              <image href="her-face.jpg" x="5.5" y="7.5" width="21" height="21" clip-path="url(#girlFaceClip)" onerror="this.style.display='none';"/>
-              <circle cx="16" cy="18" r="10.5" fill="none" stroke="#f43f5e" stroke-width="1.5" opacity="0.8"/>
-              <!-- Cheerful Anime Blush over custom photo -->
-              <ellipse cx="10" cy="21" rx="2.5" ry="1.5" fill="rgba(244,63,94,0.6)"/>
-              <ellipse cx="22" cy="21" rx="2.5" ry="1.5" fill="rgba(244,63,94,0.6)"/>
-
-              <path d="M 10 30 Q 3 34 5 39" stroke="#ffe4e6" stroke-width="3" stroke-linecap="round" fill="none"/>
-              <circle cx="4" cy="40" r="4" fill="#e11d48"/>
-              <circle cx="2" cy="38" r="2.5" fill="#f43f5e"/>
-              <circle cx="6" cy="38" r="2.5" fill="#fb7185"/>
+              <path d="M 9 30 Q 2 34 4 39" stroke="#ffe4e6" stroke-width="3" stroke-linecap="round" fill="none"/>
+              <circle cx="3" cy="40" r="4" fill="#e11d48"/>
+              <circle cx="1" cy="38" r="2.5" fill="#f43f5e"/>
+              <circle cx="5" cy="38" r="2.5" fill="#fb7185"/>
 
               <g class="anim-girl-wave">
-                <path d="M 22 30 Q 28 22 29 14" stroke="#ffe4e6" stroke-width="3" stroke-linecap="round" fill="none"/>
-                <circle cx="29" cy="13" r="2.5" fill="#ffe4e6"/>
+                <path d="M 23 30 Q 29 22 30 14" stroke="#ffe4e6" stroke-width="3" stroke-linecap="round" fill="none"/>
+                <circle cx="30" cy="13" r="2.5" fill="#ffe4e6"/>
               </g>
             </g>
           </g>
         </svg>
       </div>
 
-      <!-- Boarding Pass -->
+      <!-- Boarding Pass (Using Your Exact Customized Burmese Text) -->
       <div class="boarding-pass">
         <div class="pass-header">SPECIAL DELIVERY • TO MY LOVE</div>
         <div class="pass-route">
@@ -537,12 +538,20 @@
     const voicePlayBtn = document.getElementById('voicePlayBtn');
     const voiceStatus = document.getElementById('voiceStatus');
 
-    // Custom Face Sticker Loader
+    // Enhanced Custom Face Sticker Loader for Flight Gameplay
     const myFace = new Image();
     let hasMyFace = false;
-    myFace.onload = () => hasMyFace = true;
-    myFace.onerror = () => hasMyFace = false;
+    myFace.onload = () => { hasMyFace = true; };
+    myFace.onerror = () => {
+      if (!myFace.src.includes('my-face.png')) {
+        myFace.src = 'my-face.png';
+      }
+    };
     myFace.src = 'my-face.jpg';
+
+    function isMyFaceLoaded() {
+      return hasMyFace || (myFace.complete && myFace.naturalWidth > 0);
+    }
 
     let distance = 1920;
     let planeY = 300;
@@ -698,7 +707,7 @@
       }, 300);
     }
 
-    // REALISTIC PASSENGER JET WITH EMOTIONAL PHOTO-STICKER
+    // REALISTIC PASSENGER JET WITH ENLARGED EMOTIONAL PHOTO-STICKER
     function drawRealisticAirliner(x, y) {
       ctx.save();
       ctx.translate(x + 20, y + 10);
@@ -707,7 +716,7 @@
       ctx.rotate(pitchAngle);
 
       if (invulnerableTimer > 0) {
-        ctx.globalAlpha = (Math.floor(invulnerableTimer / 4) % 2 === 0) ? 0.7 : 1.0;
+        ctx.globalAlpha = (Math.floor(invulnerableTimer / 4) % 2 === 0) ? 0.75 : 1.0;
       }
 
       // 1. Jet Contrail
@@ -794,7 +803,7 @@
 
       // 7. Cabin Rear Windows
       ctx.fillStyle = "#1e293b";
-      for (let w = -20; w <= -6; w += 4) {
+      for (let w = -20; w <= -8; w += 4) {
         ctx.fillRect(w, -2, 2, 2);
       }
 
@@ -822,165 +831,116 @@
       ctx.fillStyle = "#38bdf8";
       ctx.fillRect(-3, 7, 2, 2);
 
-      // 10. REALISTIC PHOTO-STICKER & EMOTIONAL REACTION (CENTER OF FUSELAGE)
-      if (hasMyFace) {
+      // 10. ENLARGED PHOTO-STICKER & EMOTIONS ON FLYING AIRLINER
+      const faceRadius = 13.5;
+      const faceX = 3;
+      const faceY = -1;
+
+      if (isMyFaceLoaded()) {
         ctx.save();
-        
-        // Hurt Vibration Shake
-        let shakeOffset = (invulnerableTimer > 0) ? Math.sin(invulnerableTimer * 1.5) * 2.2 : 0;
+        let shakeOffset = (invulnerableTimer > 0) ? Math.sin(invulnerableTimer * 1.5) * 2.5 : 0;
         ctx.translate(shakeOffset, 0);
 
-        // Circular Photo Mask
+        // Circular Photo Outer Rim
+        ctx.beginPath();
+        ctx.arc(faceX, faceY, faceRadius + 1.8, 0, Math.PI * 2);
+        ctx.fillStyle = (invulnerableTimer > 0) ? "#ef4444" : ((happyTimer > 0) ? "#f59e0b" : "#f43f5e");
+        ctx.fill();
+
+        ctx.beginPath();
+        ctx.arc(faceX, faceY, faceRadius + 0.5, 0, Math.PI * 2);
+        ctx.fillStyle = "#ffffff";
+        ctx.fill();
+
+        // Clipped Photo
         ctx.save();
         ctx.beginPath();
-        ctx.arc(3, -1, 8.5, 0, Math.PI * 2);
+        ctx.arc(faceX, faceY, faceRadius, 0, Math.PI * 2);
         ctx.clip();
-        ctx.drawImage(myFace, -5.5, -9.5, 17, 17);
+        ctx.drawImage(myFace, faceX - faceRadius, faceY - faceRadius, faceRadius * 2, faceRadius * 2);
 
-        // Hurt Reddish Overlay
         if (invulnerableTimer > 0) {
-          ctx.fillStyle = "rgba(239, 68, 68, 0.28)";
+          ctx.fillStyle = "rgba(239, 68, 68, 0.32)";
           ctx.fill();
         }
         ctx.restore();
 
-        // Sticker Border Ring
         ctx.strokeStyle = (invulnerableTimer > 0) ? "#ef4444" : ((happyTimer > 0) ? "#f59e0b" : "#f43f5e");
-        ctx.lineWidth = 1.6;
+        ctx.lineWidth = 1.8;
         ctx.beginPath();
-        ctx.arc(3, -1, 8.5, 0, Math.PI * 2);
+        ctx.arc(faceX, faceY, faceRadius, 0, Math.PI * 2);
         ctx.stroke();
 
-        // EMOTIONAL EFFECTS LAYERED ON MY-FACE PHOTO
+        // EMOTION OVERLAYS
         if (invulnerableTimer > 0) {
-          // Tears Streaming Backwards in the Airstream (မျက်ရည်များ လေထဲလွင့်ပျံခြင်း)
+          // Tears Flying Backwards
           ctx.fillStyle = "#38bdf8";
-          ctx.beginPath(); ctx.arc(-5, -2, 2, 0, Math.PI * 2); ctx.fill();
-          ctx.fillRect(-13, -2.8, 8, 1.6);
+          ctx.beginPath(); ctx.arc(faceX - 8, faceY - 2, 2.2, 0, Math.PI * 2); ctx.fill();
+          ctx.fillRect(faceX - 18, faceY - 2.8, 10, 1.8);
 
-          ctx.beginPath(); ctx.arc(-4, 2, 1.8, 0, Math.PI * 2); ctx.fill();
-          ctx.fillRect(-11, 1.2, 7, 1.4);
+          ctx.beginPath(); ctx.arc(faceX - 7, faceY + 3, 2, 0, Math.PI * 2); ctx.fill();
+          ctx.fillRect(faceX - 16, faceY + 2.2, 9, 1.5);
 
-          // Cute Forehead Cross Bandage (ပတ်တီးဖြူလေး)
+          // Forehead Bandage
           ctx.fillStyle = "#fed7aa";
-          ctx.fillRect(1, -9, 7, 2.5);
-          ctx.fillRect(3.2, -11, 2.5, 6.5);
+          ctx.fillRect(faceX - 4, faceY - faceRadius - 2, 8, 3);
+          ctx.fillRect(faceX - 1.5, faceY - faceRadius - 5, 3, 8);
           ctx.fillStyle = "#ea580c";
-          ctx.fillRect(2.5, -8.2, 4, 1);
-          ctx.fillRect(4, -9.5, 1, 3.5);
+          ctx.fillRect(faceX - 2.5, faceY - faceRadius - 1, 5, 1);
+          ctx.fillRect(faceX - 0.5, faceY - faceRadius - 3.5, 1, 5);
 
-          // Sweat Drops & Dizzy Star (မူးဝေနေသည့် အမှတ်အသား)
-          ctx.fillStyle = "#60a5fa";
-          ctx.beginPath(); ctx.arc(10, -6, 1.6, 0, Math.PI * 2); ctx.fill();
-          ctx.font = "8px sans-serif";
-          ctx.fillStyle = "#facc15";
-          ctx.fillText("💫", 0, -11);
+          // Dizzy Star & Sweat
+          ctx.font = "10px sans-serif";
+          ctx.fillText("💫", faceX - 3, faceY - faceRadius - 4);
+          ctx.fillText("💧", faceX + faceRadius - 2, faceY - 2);
 
         } else if (happyTimer > 0) {
-          // Cute Anime Pink Blushes on Cheeks (ပါးနီလေးများ)
+          // Pink Cheeks
           ctx.fillStyle = "rgba(244, 63, 94, 0.65)";
-          ctx.beginPath(); ctx.arc(-1, 2, 2.5, 0, Math.PI * 2); ctx.fill();
-          ctx.beginPath(); ctx.arc(7, 2, 2.5, 0, Math.PI * 2); ctx.fill();
+          ctx.beginPath(); ctx.arc(faceX - 5, faceY + 3, 3.2, 0, Math.PI * 2); ctx.fill();
+          ctx.beginPath(); ctx.arc(faceX + 5, faceY + 3, 3.2, 0, Math.PI * 2); ctx.fill();
 
-          // Floating Love Hearts
-          ctx.font = "8px sans-serif";
-          ctx.fillText("💖", 2, -10);
-          ctx.fillText("✨", 8, -6);
+          ctx.font = "10px sans-serif";
+          ctx.fillText("💖", faceX - 2, faceY - faceRadius - 2);
+          ctx.fillText("✨", faceX + faceRadius - 3, faceY - 5);
 
         } else {
-          // Normal Flying State: Sweet Cheeks
-          ctx.fillStyle = "rgba(251, 113, 133, 0.4)";
-          ctx.beginPath(); ctx.arc(-1, 2, 2, 0, Math.PI * 2); ctx.fill();
-          ctx.beginPath(); ctx.arc(7, 2, 2, 0, Math.PI * 2); ctx.fill();
+          // Normal Flying Blushes
+          ctx.fillStyle = "rgba(251, 113, 133, 0.45)";
+          ctx.beginPath(); ctx.arc(faceX - 5, faceY + 3, 2.6, 0, Math.PI * 2); ctx.fill();
+          ctx.beginPath(); ctx.arc(faceX + 5, faceY + 3, 2.6, 0, Math.PI * 2); ctx.fill();
         }
 
         ctx.restore();
 
       } else {
-        // FALLBACK VECTOR ANIME FACE (my-face.jpg မတင်ရသေးပါက ပြသပေးမည့် ပုံစံ)
+        // Fallback Anime Face
         if (invulnerableTimer > 0) {
           ctx.strokeStyle = "#1e293b";
           ctx.lineWidth = 1.4;
           ctx.lineCap = "round";
 
-          ctx.beginPath();
-          ctx.moveTo(7, -2); ctx.lineTo(10, 0); ctx.lineTo(7, 2);
-          ctx.stroke();
-
-          ctx.beginPath();
-          ctx.moveTo(16, -2); ctx.lineTo(13, 0); ctx.lineTo(16, 2);
-          ctx.stroke();
-
-          ctx.beginPath();
-          ctx.arc(11.5, 4.2, 2.5, Math.PI * 1.15, Math.PI * 1.85);
-          ctx.stroke();
+          ctx.beginPath(); ctx.moveTo(7, -2); ctx.lineTo(10, 0); ctx.lineTo(7, 2); ctx.stroke();
+          ctx.beginPath(); ctx.moveTo(16, -2); ctx.lineTo(13, 0); ctx.lineTo(16, 2); ctx.stroke();
+          ctx.beginPath(); ctx.arc(11.5, 4.2, 2.5, Math.PI * 1.15, Math.PI * 1.85); ctx.stroke();
 
           ctx.fillStyle = "#38bdf8";
           ctx.beginPath(); ctx.arc(4, 0, 1.8, 0, Math.PI * 2); ctx.fill();
           ctx.fillRect(0, -0.5, 4, 1.2);
-
-          ctx.beginPath(); ctx.arc(2, 3, 1.5, 0, Math.PI * 2); ctx.fill();
-          ctx.fillRect(-3, 2.5, 5, 1);
-
-          ctx.fillStyle = "#fed7aa";
-          ctx.fillRect(10, -5, 5, 2.5);
-          ctx.fillStyle = "#ea580c";
-          ctx.fillRect(12, -5, 1, 2.5);
-
-        } else if (happyTimer > 0) {
-          ctx.fillStyle = "rgba(244, 63, 94, 0.65)";
-          ctx.beginPath(); ctx.arc(6, 2, 2.2, 0, Math.PI*2); ctx.fill();
-          ctx.beginPath(); ctx.arc(17, 2, 2.2, 0, Math.PI*2); ctx.fill();
-
-          ctx.font = "7px sans-serif";
-          ctx.fillStyle = "#f43f5e";
-          ctx.fillText("❤️", 5, 1);
-          ctx.fillText("❤️", 13, 1);
-
-          ctx.strokeStyle = "#1e293b";
-          ctx.lineWidth = 1.3;
-          ctx.beginPath();
-          ctx.arc(11.5, 1.5, 2.5, 0.1, Math.PI - 0.1);
-          ctx.stroke();
-
         } else {
           ctx.fillStyle = "rgba(251, 113, 133, 0.55)";
           ctx.beginPath(); ctx.arc(6, 2, 2, 0, Math.PI*2); ctx.fill();
           ctx.beginPath(); ctx.arc(17, 2, 2, 0, Math.PI*2); ctx.fill();
 
-          if (velocity < -1) {
-            ctx.strokeStyle = "#1e293b";
-            ctx.lineWidth = 1.3;
-            ctx.beginPath(); ctx.arc(8, 0, 1.8, Math.PI * 1.15, Math.PI * 1.85); ctx.stroke();
-            ctx.beginPath(); ctx.arc(15, 0, 1.8, Math.PI * 1.15, Math.PI * 1.85); ctx.stroke();
-
-            ctx.fillStyle = "#f43f5e";
-            ctx.beginPath(); ctx.arc(11.5, 1.5, 2, 0, Math.PI); ctx.fill();
-          } else {
-            let isBlinking = (frameCount % 150 > 142);
-            if (isBlinking) {
-              ctx.strokeStyle = "#1e293b";
-              ctx.lineWidth = 1.2;
-              ctx.beginPath(); ctx.moveTo(6.5, 0); ctx.lineTo(10, 0); ctx.stroke();
-              ctx.beginPath(); ctx.moveTo(13.5, 0); ctx.lineTo(17, 0); ctx.stroke();
-            } else {
-              ctx.fillStyle = "#0f172a";
-              ctx.beginPath(); ctx.arc(8, -0.5, 1.8, 0, Math.PI*2); ctx.fill();
-              ctx.fillStyle = "#ffffff";
-              ctx.beginPath(); ctx.arc(7.4, -1.1, 0.7, 0, Math.PI*2); ctx.fill();
-
-              ctx.fillStyle = "#0f172a";
-              ctx.beginPath(); ctx.arc(15, -0.5, 1.8, 0, Math.PI*2); ctx.fill();
-              ctx.fillStyle = "#ffffff";
-              ctx.beginPath(); ctx.arc(14.4, -1.1, 0.7, 0, Math.PI*2); ctx.fill();
-            }
-
-            ctx.strokeStyle = "#1e293b";
-            ctx.lineWidth = 1.2;
-            ctx.beginPath();
-            ctx.arc(11.5, 1.5, 2, 0.2, Math.PI - 0.2);
-            ctx.stroke();
+          let isBlinking = (frameCount % 150 > 142);
+          if (!isBlinking) {
+            ctx.fillStyle = "#0f172a";
+            ctx.beginPath(); ctx.arc(8, -0.5, 1.8, 0, Math.PI*2); ctx.fill();
+            ctx.beginPath(); ctx.arc(15, -0.5, 1.8, 0, Math.PI*2); ctx.fill();
           }
+          ctx.strokeStyle = "#1e293b";
+          ctx.lineWidth = 1.2;
+          ctx.beginPath(); ctx.arc(11.5, 1.5, 2, 0.2, Math.PI - 0.2); ctx.stroke();
         }
       }
 
@@ -1085,7 +1045,7 @@
             obs.y + obs.h > planeY - 4) {
           
           hearts--;
-          invulnerableTimer = 65; // Trigger Hurt & Crying Reaction!
+          invulnerableTimer = 65;
           playBeep(160, 0.25, 'sawtooth');
           updateHeartsDisplay();
 
@@ -1106,7 +1066,7 @@
             item.y < planeY + 20 &&
             item.y + item.h > planeY - 4) {
           
-          happyTimer = 45; // Trigger Love Blush & Hearts Reaction!
+          happyTimer = 45;
 
           if (item.type === 'heart') {
             if (hearts < 3) hearts++;
